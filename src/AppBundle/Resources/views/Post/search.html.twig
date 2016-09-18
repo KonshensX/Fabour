@@ -1,0 +1,27 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Search page {% endblock %}
+
+{% block body %}
+  {{ parent() }}
+  <h1>Search result for : </h1>
+<ul class="product-list-basic">
+  {% for item in result %}
+    <li>
+      <a href="{{ path('app_post_full', { 'id': item.id }) }}" class="product-photo">
+        <img class="img-responsive" src="{{ asset('/uploads/images/posts/' ~ item.image) }}" height="130" alt="{{ item.title }}" />
+      </a>
+
+      <h2><a href="{{ path('app_post_full', { 'id': item.id }) }}">{{ item.title }}</a></h2>
+      {#<a href="#" class="product-compare">{{ item.owner }}</a>#}
+      <p class="product-description">{{ item.category.getCat() }}</p>
+      <strong><p class="product-description">{{ item.city.getCity() }}</p></strong>
+      <!--
+            <p>{{ item.description|length > 150 ? item.description|slice(0,30) : item.description  }}...</p>
+            -->
+      <button>Learn more!</button>
+      <p class="product-price">{{ item.price }}DH</p>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

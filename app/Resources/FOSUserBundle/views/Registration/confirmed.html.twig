@@ -1,0 +1,23 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block title '' %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <div class="col-lg-offset-3 col-lg-6">
+        <div class="portlet light">
+            <div class="portlet-title text-center">
+                <div class="caption">
+                    <span class="glyphicon glyphicon-ok-sign"></span> Registration Completed :)
+                </div>
+            </div>
+            <div class="portlet-body">
+                <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+            </div>
+        </div>
+    </div>
+    {#
+    {% if targetUrl %}
+    <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
+    {% endif %}
+    #}
+{% endblock fos_user_content %}

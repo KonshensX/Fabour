@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ message.title }} {% endblock %}
+
+{% block body %}
+    {{ parent() }}
+    <h1 class="text-success">Full message page</h1>
+
+    {{ message.title }} <br>
+    {{ message.sender }} <br>
+    {{ message.receiver }} <br>
+    {{ message.content }} <br>
+    {{ message.time|date('Y-m-d H:m:s') }} <br>
+
+{% endblock %}
+
+{% block javascripts %}
+
+{% endblock %}

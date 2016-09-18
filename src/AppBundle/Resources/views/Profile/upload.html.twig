@@ -1,0 +1,36 @@
+{% extends '::base.html.twig' %}
+
+{% block title 'Upload test' %}
+
+{% block body %}
+    {{ parent() }}
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="text-success">{{ id }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="alert alert-warning">
+            <h2 class="text-info text-center">Upload page testing</h2>
+        </div>
+    </div>
+    {% if app.session.flashBag.has('post-add')%}
+        {% for message in app.session.flashBag.get('post-add') %}
+            <div class="alert alert-success">
+                <h2 class="text-info text-center">{{ message }}</h2>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <form enctype="multipart/form-data" class="dropzone" action="{{ app.request.uri }}" method="post" name="dropzone_form" id="dropzone_form">
+                {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Fucking index ' %}
+
+{% block body %}
+    {{ parent() }}
+
+    <ul class="product-list-basic">
+   {% for item in items %}
+        <li>
+
+            <a href="{{ path('app_post_full', { 'id': item.id }) }}" class="product-photo">
+                <img class="img-responsive" src="{{ asset('/uploads/images/posts/' ~ item.image) }}" height="130" alt="{{ item.title }}" />
+            </a>
+
+            <h2><a href="{{ path('app_post_full', { 'id': item.id }) }}">{{ item.title }}</a></h2>
+            {#<a href="#" class="product-compare">{{ item.owner }}</a>#}
+            <p class="product-description">{{ item.category.getCat() }}</p>
+            <strong><p class="product-description">{{ item.city.getCity() }}</p></strong>
+            <!--
+            <p>{{ item.description|length > 150 ? item.description|slice(0,30) : item.description  }}...</p>
+            -->
+            <p class="product-price">{{ item.price }}DH</p>
+
+        </li>
+       {% endfor %}
+
+    </ul>
+
+
+    <!-- Side bar -->
+        <div class="col-lg-3 pull-right" >
+            <div class="portlet light">
+                <div class="caption">Something:</div>
+                <div class="portlet-body">
+                    <ul>
+                        <li>Rattata</li>
+                        <li>Go</li>
+                        <li>Freaking</li>
+                        <li>Trap King</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+{% endblock %}

@@ -1,0 +1,232 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}
+    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} Profile
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="text-info">User profile</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            {% if app.session.flashBag.has('success') %}
+                <div class="alert alert-success text-center">
+                    <h4 class="text-info">
+                        {% for msg in app.session.flashBag.get('success') %}
+                            {{ msg }}
+                        {% endfor %}
+                    </h4>
+                </div>
+            {% endif %}
+
+            {% if app.session.flashBag.has('notice') %}
+                {% for msg in app.session.flashBag.get('notice') %}
+                    <div class="alert alert-success text-center">
+                        <h4 class="text-info">
+                            {{ msg }}
+                        </h4>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="portlet light profile-sidebar-portlet">
+                <div class="profile-userpic">
+                    <img class="img-responsive" src="{{ asset('uploads/images/profile/' ~ info.image) }}" alt="{{ info.username }}" width="200" height="200">
+                </div>
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">{{ info.username }}</div>
+                    <div class="profile-usertitle-job">{{ info.occupation }}</div>
+                    <div class="profile-usertitle-job">1995/12/02</div>
+                </div>
+                <div class="profile-userbuttons">
+                    <button type="button" class="btn btn-circle green-haze btn-sm">Contact</button>
+                </div>
+                <div class="profile-usermenu"></div>
+            </div>
+
+            <div class="portlet light">
+                <h4 class="profile-desc-title">About {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</h4>
+                <span class="profile-desc-text"><strong>Phone number : {{ info.mobile }}</strong></span>
+                <span class="profile-desc-text"></span>
+                <h3 class="profile-desc-title">Interests</h3>
+                <span class="profile-desc-text">{{ info.interests }}</span>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div class="profile-content">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="portlet light">
+                            <div class="portlet-title tabbable-line">
+                                <div class="caption caption-md">
+                                    <span class="caption-subject font-blue-madison bold uppercase">Profile Account</span>
+                                </div>
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#tab1" data-toggle="tab" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> Information personel</a>
+                                    </li>
+                                    <li class>
+                                        <a href="#tab4" data-toggle="tab" aria-expanded="true"><span class="glyphicon glyphicon-picture"></span> Avatar</a>
+                                    </li>
+                                    <li class>
+                                        <a href="#tab2" data-toggle="tab" aria-expanded="false"><span class="glyphicon glyphicon-envelope"></span> Messages</a>
+                                    </li>
+                                    <li class>
+                                        <a href="#tab3" data-toggle="tab" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span> My shit</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="portlet-body">
+                                <div class="tab-content">
+                                    <!-- Pane #1 Profile informations -->
+                                    <div class="tab-pane active" id="tab1">
+
+                                        {{ form_start(form) }}
+                                            <div class="form-group">
+                                                {{ form_label(form.fname, null, {
+                                                    'label_attr': {'class': 'control-label'}
+                                                }) }}
+                                                {{ form_widget(form.fname, {
+                                                    'attr': {'class': 'form-control'}
+                                                }) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_label(form.lname, null, {
+                                                    'label_attr': {'class': 'control-label'}
+                                                }) }}
+                                                {{ form_widget(form.lname, {
+                                                    'attr': {'class': 'form-control'}
+                                                }) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_label(form.phone, null, {
+                                                    'label_attr': {'class': 'control-label'}
+                                                }) }}
+                                                {{ form_widget(form.phone, {
+                                                    'attr': {'class': 'form-control'}
+                                                }) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_label(form.interests, null, {
+                                                    'label_attr': {'class': 'control-label'}
+                                                }) }}
+                                                {{ form_widget(form.interests, {
+                                                    'attr': {'class': 'form-control'}
+                                                }) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_label(form.occupation, null, {
+                                                    'label_attr': {'class': 'control-label'}
+                                                }) }}
+                                                {{ form_widget(form.occupation, {
+                                                    'attr': {'class': 'form-control'}
+                                                }) }}
+                                            </div>
+                                            <div class="form-group">
+                                                {{ form_label(form.about, null, {
+                                                    'label_attr': {'class': 'control-label'}
+                                                }) }}
+                                                {{ form_widget(form.about, {
+                                                    'attr': {'class': 'form-control'}
+                                                }) }}
+                                            </div>
+                                            <div class="margin-top-10">
+                                                {{ form_widget(form.submit, {
+                                                    'attr': {'class': 'btn btn-circle green-haze'}
+                                                }) }}
+                                                <a href="#" class="btn btn-circle default">Cancel</a>
+                                            </div>
+                                        {{ form_end(form) }}
+                                    </div>
+
+                                    <!-- Pane #4 Avatar -->
+                                    <div class="tab-pane" id="tab4">
+                                        <div class="col-lg-offset-3 col-lg-6">
+                                            <img class="img-responsive" src="{{ asset('uploads/images/profile/' ~ info.image) }}" alt="{{ info.username }}">
+                                        </div>
+                                        </hr>
+                                        </hr>
+                                        </hr>
+                                        <div class="row">
+                                            <div class="col-lg-offset-3 col-lg-6" >
+                                                {{ form_start(avatar) }}
+                                                <div class="form-group">
+                                                    {{ form_label(avatar.avatar, null, {
+                                                        'label_attr': {'class': 'contro-label'}
+                                                    }) }}
+                                                    {{ form_widget(avatar.avatar, {
+                                                        'attr': {'class': 'btn'}
+                                                    }) }}
+                                                </div>
+                                                <div class="margin-top-10">
+                                                    {{ form_widget(avatar.submit, {
+                                                        'attr': {'class': 'btn btn-circle green-haze'}
+                                                    }) }}
+                                                </div>
+                                                {{ form_end(avatar) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Pane #2 Messages -->
+                                    <div class="tab-pane" id="tab2">
+                                        {% for message in messages %}
+                                            <a href="{{ path('full_message', {'id': message.id}) }}">
+                                                <div class="row">
+                                                    <div class="message-wrapper">
+                                                        <div class="col-lg-12"><span class="glyphicon glyphicon-user"></span> <strong>{{ message.sender }}</strong></div>
+                                                        <br>
+                                                        <div class="col-lg-12"><span class="glyphicon glyphicon-share-alt"></span> {{ message.content|length>70 ? message.content|slice(0,70) : message.content }} ...</div>
+                                                        <br>
+                                                             <div class="col-lg-12"><span class="glyphicon glyphicon-dashboard"></span> {{ message.time|date('Y-m-d H:m:s') }}</div>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <hr>
+                                        {% endfor %}
+
+                                    </div>
+                                    <!-- Pane #3 existing items -->
+                                    <div class="tab-pane" id="tab3">
+                                        <div class="row">
+                                            <a class="btn btn-circle green-haze pull-right" href="{{ path('app_post_new') }}">New item</a>
+                                        </div>
+                                        <hr>
+                                        {% for item in items %}
+                                        <div style="margin-bottom: 20px ">
+                                            <img class="img-responsive item-pic" src="{{ asset('uploads/images/posts/' ~ item.image) }}" alt="">
+
+                                            <div class="col-lg-10 item-info">
+                                                <a href="{{ path('app_post_full', {'id': item.id }) }}"><span class="item-title">{{ item.title }}</span></a>
+                                               <!--  <p class="item-desc">{{ item.description|length > 50 ? item.description|slice(0, 150) ~ '...' : item.description  }}</p> -->
+                                                <p class="item-desc">{{ item.category.getCat }}</p>
+                                                <p class="item-desc"><strong>{{ item.city.getCity }}</strong></p>
+                                                <div class="profile-userbuttons pull-right">
+                                                    <a href="{{ path('app_post_delete', {'id': item.id }) }}" class="btn btn-circle red-haze "><span class="glyphicon glyphicon-trash"></span></a>
+                                                    <a href="{{ path('app_post_edit', {'id': item.id }) }}" class="btn btn-circle green-haze "><span class="glyphicon glyphicon-pencil"></span></a>
+                                                    <a href="{{ path('app_post_full', {'id': item.id }) }}" class="btn btn-circle blue-chambray">View</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            <hr>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

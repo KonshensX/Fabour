@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Hardware</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ hardware.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ hardware.name }}</td>
+            </tr>
+            <tr>
+                <th>Designation</th>
+                <td>{{ hardware.designation }}</td>
+            </tr>
+            <tr>
+                <th>Bruh</th>
+                <td>{{ hardware.bruh }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{% if hardware.date %}{{ hardware.date|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('hardware_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('hardware_edit', { 'id': hardware.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
