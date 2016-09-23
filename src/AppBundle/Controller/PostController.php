@@ -7,6 +7,7 @@ use AppBundle\Entity\Post;
 use AppBundle\Entity\Category;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -32,7 +33,7 @@ class PostController extends Controller
 
       $em = $this->getDoctrine()->getEntityManager();
 
-      $repo = $em->getRepository('AppBundle:Post')->findBy(array('title' => $term, 'price' => '999'));
+      $repo = $em->getRepository('AppBundle:Post')->search($em, $term);
 
       return $this->render('AppBundle:Post:search.html.twig', array(
           'result' => $repo
@@ -211,16 +212,56 @@ class PostController extends Controller
     /**
      * @Route("/full/{id}")
      */
-    public function fullAction($id)
+    public function fullAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
         $repo = $em->getRepository('AppBundle:Post')->findOneBy(array('id'  =>  $id));
         $images = $em->getRepository('AppBundle:Images')->findBy(array('post_id' =>  $id));
 
+        $messageForm = $this->createFormBuilder(null)
+            ->add('name', TextType::class, array(
+                'label' => 'Your name'
+            ))
+            ->add('phone', TextType::class, array(
+                'label' =>  'Your phone number'
+            ))
+            ->add('email', TextType::class, array(
+                'label' =>  'Your email'
+            ))
+            ->add('message', TextareaType::class, array(
+                'label' =>  'Message'
+            ))
+            ->add('send', SubmitType::class, array(
+                'label' =>  'Send'
+            ))
+        ->getForm();
+
+        $messageForm->handleRequest($request);
+
+        if($messageForm->isValid() && $messageForm->isSubmitted()) {
+            $name = $messageForm['name']->getData();
+            $phone = $messageForm['name']->getData();
+            $email = $messageForm['name']->getData();
+            $messageContent = $messageForm['name']->getData();
+
+            $messageContent = "Name: " . $name . "<br>" .
+                                "Phone: " . $phone . "<br>" .
+                                $messageContent;
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject($name . "Sent you a message concerning " .$repo->getTitle())
+                ->setFrom($email)
+                ->setTo($repo->getEmail())
+                ->setBody($messageContent);
+
+            $this->get('mailer')->send($message);
+        }
+
         return $this->render('AppBundle:Post:full.html.twig', array(
             'item'  =>  $repo,
-            'images'    =>  $images
+            'images'    =>  $images,
+            'message'   =>  $messageForm->createView()
         ));
     }
 

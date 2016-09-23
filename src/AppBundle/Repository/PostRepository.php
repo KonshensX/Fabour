@@ -15,6 +15,14 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         return $this->findBy(array(), array('id' => 'DESC'));
     }
 
+    public function search($em, $term) {
+
+        $query = $em->createQuery("SELECT p FROM AppBundle:Post p WHERE p.title like :term")
+            ->setParameter('term', '%'.$term.'%');
+
+        return $query->getResult();
+    }
+
     public function incViews($em, $id) {
 
         $selectQuery = $em->createQuery('SELECT p.views FROM AppBundle:Post p WHERE p.id = :id')
@@ -28,7 +36,6 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         $updateQuery->setParameter(':views', ++$views);
         $updateQuery->setParameter(':id', $id);
         return $updateQuery->execute();
-
 
     }
 }
