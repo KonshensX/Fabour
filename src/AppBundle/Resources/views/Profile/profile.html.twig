@@ -6,12 +6,17 @@
 
 {% block body %}
 
+    <div class="notification">
+        <h4 class="text-primary">Informations updated</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquam </p>
+    </div>
+
     <div class="row">
         <div class="col-lg-12">
             <h2 class="text-info">User profile</h2>
         </div>
     </div>
-
+    {#
     <div class="row">
         <div class="col-lg-12">
             {% if app.session.flashBag.has('success') %}
@@ -35,12 +40,13 @@
             {% endif %}
         </div>
     </div>
+    #}
 
     <div class="row">
         <div class="col-lg-3 col-md-6">
             <div class="portlet light profile-sidebar-portlet">
                 <div class="profile-userpic">
-                    <img class="img-responsive" src="{{ asset('uploads/images/profile/' ~ info.image) }}" alt="{{ info.username }}" width="200" height="200">
+                    <img class="img-responsive img-rounded" id="profile-userpic" src="{{ asset('uploads/images/profile/' ~ info.image) }}" alt="{{ info.username }}" width="200" height="200">
                 </div>
                 <div class="profile-usertitle">
                     <div class="profile-usertitle-name">{{ info.username }}</div>
@@ -91,7 +97,9 @@
                                     <!-- Pane #1 Profile informations -->
                                     <div class="tab-pane active" id="tab1">
 
-                                        {{ form_start(form) }}
+                                        {{ form_start(form, {
+                                            'attr': {'id': 'userinfo-form'}
+                                        }) }}
                                             <div class="form-group">
                                                 {{ form_label(form.fname, null, {
                                                     'label_attr': {'class': 'control-label'}
@@ -152,20 +160,22 @@
                                     <!-- Pane #4 Avatar -->
                                     <div class="tab-pane" id="tab4">
                                         <div class="col-lg-offset-3 col-lg-6">
-                                            <img class="img-responsive" src="{{ asset('uploads/images/profile/' ~ info.image) }}" alt="{{ info.username }}">
+                                            <img class="img-responsive img-rounded preview" src="{{ asset('uploads/images/profile/' ~ info.image) }}" alt="{{ info.username }}">
                                         </div>
                                         </hr>
                                         </hr>
                                         </hr>
                                         <div class="row">
                                             <div class="col-lg-offset-3 col-lg-6" >
-                                                {{ form_start(avatar) }}
+                                                {{ form_start(avatar, {
+                                                    'attr': {'id': 'avatar-form'}
+                                                }) }}
                                                 <div class="form-group">
                                                     {{ form_label(avatar.avatar, null, {
                                                         'label_attr': {'class': 'contro-label'}
                                                     }) }}
                                                     {{ form_widget(avatar.avatar, {
-                                                        'attr': {'class': 'btn'}
+                                                        'attr': {'onChange': 'previewImage()'}
                                                     }) }}
                                                 </div>
                                                 <div class="margin-top-10">

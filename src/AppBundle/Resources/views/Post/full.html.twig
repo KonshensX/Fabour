@@ -5,10 +5,19 @@
 {% endblock %}
 
 {% block body %}
+
+    <div class="notification">
+        <h4 class="text-primary">Informations updated</h4>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquam </p>
+    </div>
+
     <div class="col-lg-9" style="color: #0d1217">
         <div class="portlet light">
             <div class="portlet-title">
-                <div class="caption caption-md"><h2 class="text-primary">{{ item.title }}</h2></div>
+                <div class="caption caption-md">
+                    <h2 class="text-primary">{{ item.title }}</h2>
+                    <a id="fav" class="btn btn-circle blue-chambray-stripe" href="" >Favorite</a>
+                </div>
                 <div class="actions"><h2 class="text-primary">{{ item.price }}DH</h2></div>
             </div>
             <div class="portlet-body">
@@ -142,12 +151,19 @@
     <script type="text/javascript">
         $(document).ready(function() {
             MAgallery("myGallery");
-
             $.ajax({
                 type: "POST",
                 url: "{{ path('add_view', {'id': item.id}) }}"
             });
+            var url = "/pagination/web/app_dev.php/post/checkFav/{{ item.id }}";
+            favedOrNah(url);
         });
 
+        $('#fav').on('click', function(e){
+            e.preventDefault();
+            var button = document.querySelector('#fav');
+            var url = "/pagination/web/app_dev.php/post/favorated/{{ item.id }}";
+            otherSide(url);
+        });
     </script>
 {% endblock %}

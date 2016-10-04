@@ -6,7 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class ProfileController extends Controller
@@ -27,8 +29,10 @@ class ProfileController extends Controller
         $items = $em->getRepository('AppBundle:Post')->findBy(array('owner'  =>  $user));
 
         $messages = $em->getRepository('AppBundle:Message')->findBy(array('receiver'  =>  $user));
-
-        $form = $this->createFormBuilder(array())
+        /**
+         * Update the user informations
+         */
+        $form = $this->container->get('form.factory')->createNamedBuilder('userinfo-form', FormType::class)
                 ->add('fname', TextType::class, array(
                     'label' => 'First name',
                     'data' => $repo->getFirstname()
@@ -61,24 +65,11 @@ class ProfileController extends Controller
 
         $form->handleRequest($request);
 
-        if($form->isValid() && $form->isSubmitted()) {
 
-            //this is supposed to update the personal informations on the profile page
-            $repo->setFirstname($form['fname']->getData());
-            $repo->setLastname($form['lname']->getData());
-            $repo->setMobile($form['phone']->getData());
-            $repo->setInterests($form['interests']->getData());
-            $repo->setOccupation($form['occupation']->getData());
-            $repo->setAbout($form['about']->getData());
-
-            $em->flush();
-            $this->addFlash('success', 'Profile informations has been updated');
-
-            $url = $this->generateUrl('app_profile_profile');
-            return $this->redirect($url);
-        }
-
-        $avatar = $this->createFormBuilder(array())
+        /**
+         * Upload the avatar for the user profile
+         */
+        $avatar = $this->container->get('form.factory')->createNamedBuilder('avatar-form', FormType::class)
             ->add('avatar', FileType::class, array(
                 'label' => 'Please upload image '
             ))
@@ -89,27 +80,53 @@ class ProfileController extends Controller
 
         $avatar->handleRequest($request);
 
-        if($avatar->isValid() && $avatar->isSubmitted()) {
-            /**
-             * @var Symfony\Component\HttpFoundation\File\UploadedFile $file
-             */
-            $file = $avatar['avatar']->getData();
+        if($request->getMethod() === "POST") {
 
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            if($request->request->has('userinfo-form')){
+                if($form->isValid() && $form->isSubmitted()) {
+                    //this is supposed to update the personal informations on the profile page
+                    $repo->setFirstname($form['fname']->getData());
+                    $repo->setLastname($form['lname']->getData());
+                    $repo->setMobile($form['phone']->getData());
+                    $repo->setInterests($form['interests']->getData());
+                    $repo->setOccupation($form['occupation']->getData());
+                    $repo->setAbout($form['about']->getData());
 
-            $file->move(
-                $this->getParameter('profile_directory'),
-                $fileName
-            );
+                    $em->flush();
 
-            $repo->setImage($fileName);
+                    $response = new JsonResponse();
+                    $response->setData(array(
+                        'title'   =>  "Profile informations were updated successfully!",
+                        'message'   =>  "Profile informations were updated successfully and now is a good time to go get some food"
+                    ));
+                    $response->headers->set('Content-type', 'application/json');
+                    return $response;
+                }
+            }
+            if($request->request->has('avatar-form')) {
+                if($avatar->isValid() && $avatar->isSubmitted()) {
+                    /**
+                     * @var Symfony\Component\HttpFoundation\File\UploadedFile $file
+                     */
 
-            $em->flush();
+                    $file = $avatar['avatar']->getData();
+                    $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                    $file->move(
+                        $this->getParameter('profile_directory'),
+                        $fileName
+                    );
+                    $repo->setImage($fileName);
+                    $em->flush();
 
-            $this->addFlash('notice', 'Profile picture successfully uploaded');
-
-            $url = $this->generateUrl('app_profile_profile');
-            return $this->redirect($url);
+                    $response = new JsonResponse();
+                    $response->setData(array(
+                        'title' => "Image successfully updated",
+                        'message'   =>  "The image was successfully updated"
+                    ));
+                    $response->headers->set('Content-Type', 'application/json');
+                    return $response;
+                }
+            }
         }
 
         return $this->render('AppBundle:Profile:profile.html.twig', array(

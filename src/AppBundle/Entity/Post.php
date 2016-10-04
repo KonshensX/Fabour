@@ -30,6 +30,7 @@ class Post
      **/
     private $city;
 
+
     /**
      * @var int
      *

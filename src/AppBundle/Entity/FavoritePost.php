@@ -24,7 +24,7 @@ class FavoritePost
     /**
      * @var int
      *
-     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\Column(name="user_id", type="string", length=255)
      */
     private $userId;
 
@@ -41,6 +41,14 @@ class FavoritePost
      * @ORM\Column(name="saved_at", type="datetime")
      */
     private $savedAt;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToOne(targetEntity="Post", inversedBy="faved")
+     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     * private $post;
+     **/
 
 
     /**

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\FavoritePost;
 use AppBundle\Entity\Images;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Category;
@@ -279,6 +280,70 @@ class PostController extends Controller
         $response->headers->set('Content-Type', 'application/json');
         return $response;
 
+    }
+
+    /**
+     * @Route("/favorated/{id}", name="favorated")
+     */
+    public function favedAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $response = new JsonResponse();
+        $userID = $this->getUser()->getId();
+        $exists = $em->getRepository('AppBundle:FavoritePost')->findOneBy([
+            'userId'    =>  $userID,
+            'postId'   =>  $id
+        ]);
+        $response->headers->set('Content-Type', 'application/json');
+        if(!$exists) {
+            if($id) {
+                $favedPost = new FavoritePost();
+
+                $favedPost->setPostId($id);
+                $favedPost->setSavedAt(new \DateTime());
+                $favedPost->setUserId($userID);
+
+                $em->persist($favedPost);
+                $em->flush();
+
+                $response->setData([
+                    'title' =>  'favorated'
+                ]);
+                $response->setStatusCode(200);
+                return $response;
+            }
+        } else if($exists) {
+            $em->remove($exists);
+            $em->flush();
+            $response->setData([
+                'title' =>  'deleted'
+            ]);
+            return $response;
+        }
+    }
+
+    /**
+     * @Route("/checkFav/{id}", name="checkFav")
+     */
+    public function checkFavAction(Request $request, $id){
+        $response = new JsonResponse();
+        $em = $this->getDoctrine()->getManager();
+        $userID = $this->getUser()->getId();
+        $exists = $em->getRepository('AppBundle:FavoritePost')->findOneBy([
+            'userId'    =>  $userID,
+            'postId'   =>  $id
+        ]);
+
+        if(!$exists) {
+            //if it doesn't exists add it
+            $response->setData([
+               'title' => "favorite"
+            ]);
+        } else if($exists) {
+            $response->setData([
+                'title' => "unfavorite"
+            ]);
+        }
+        return $response;
     }
 
 }
