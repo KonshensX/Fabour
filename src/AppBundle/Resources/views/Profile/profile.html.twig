@@ -213,10 +213,10 @@
                                         </div>
                                         <hr>
                                         {% for item in items %}
-                                        <div style="margin-bottom: 20px ">
+                                        <div class="item-wrapper">
                                             <img class="img-responsive item-pic" src="{{ asset('uploads/images/posts/' ~ item.image) }}" alt="">
 
-                                            <div class="col-lg-10 item-info">
+                                            <div class="col-lg-9 item-info">
                                                 <a href="{{ path('app_post_full', {'id': item.id }) }}"><span class="item-title">{{ item.title }}</span></a>
                                                <!--  <p class="item-desc">{{ item.description|length > 50 ? item.description|slice(0, 150) ~ '...' : item.description  }}</p> -->
                                                 <p class="item-desc">{{ item.category.getCat }}</p>

@@ -1,0 +1,33 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:Favorite:favoriteList{% endblock %}
+
+{% block body %}
+<h1>Welcome to the Favorite:favoriteList page</h1>
+    <div class="portlet light">
+        <div class="portlet-title">
+            <div class="caption caption-md">
+                <h3 class="text-primary">Favorites list</h3>
+            </div>
+        </div>
+        <div class="portlet-body">
+            {% for post in posts %}
+                <div class="item-wrapper">
+                    <img class="img-responsive item-pic" src="{{ asset('uploads/images/posts/' ~ post.image) }}" alt="">
+
+                    <div class="col-lg-10 item-info">
+                        <a href="{{ path('app_post_full', {'id': post.id }) }}"><span class="item-title">{{ post.title }}</span></a>
+                        <!--  <p class="item-desc">{{ post.description|length > 50 ? post.description|slice(0, 150) ~ '...' : post.description  }}</p> -->
+                        <p class="item-desc">{{ post.category.getCat }}</p>
+                        <p class="item-desc"><strong>{{ post.city.getCity }}</strong></p>
+                        <div class="profile-userbuttons pull-right">
+                            <a href="{{ path('app_post_full', {'id': post.id }) }}" class="btn btn-circle blue-chambray">View</a>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
