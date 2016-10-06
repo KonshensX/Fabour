@@ -1,9 +1,21 @@
+a:hover {
+  text-decoration: none;
+}
+
 /* body */
 body {
     background-color: #eff3f8;
-    color: #fff;
+    color: #000;
+}
+
+main {
+  margin-top: 60px;
 }
 /*Form styling*/
+
+form{
+  color: black;
+}
 
 .form-4 {
     /* Size and position */
@@ -153,7 +165,12 @@ body {
     height:50px;
     line-height: 50px;
     vertical-align: middle;
-    margin:0 10px;
+    /*margin:0 10px;*/
+    padding:0 10px;
+}
+
+.holo .username {
+  font-weight: bold;
 }
 
 .badge {
@@ -171,6 +188,16 @@ body {
     text-align: center;
     vertical-align: middle;
 }
+
+/*Notification bar items :hover effect*/
+.holo:hover {
+  display: inline-block;
+  background-color: #e5e5e5;
+  transition: background-color 0.4s linear;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
 
 /*End of profile header*/
 
@@ -231,4 +258,210 @@ ul {
 .item-desc {
     font-family: "Roboto Light";
     font-weight: 700;
+}
+
+/*Product list styling*/
+
+
+.product-list-basic{
+    list-style:none;
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+    text-align: center;
+    padding: 0;
+}
+
+.product-list-basic li{
+    box-sizing:border-box;
+    display: inline-block;
+
+    text-align:left;
+    font:normal 12px sans-serif;
+
+    background-color:#ffffff;
+    border:1px solid #dbe3e7;
+    border-radius: 3px;
+    box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.08);
+
+    margin: 0 12px 14px 0;
+    padding: 25px;
+}
+
+/* The product image */
+
+.product-list-basic .product-photo{
+    display: block;
+    text-align: center;
+    box-shadow : 0 0 20px 8px #f3f3f3 inset;
+
+    width: 275px;
+    margin-bottom: 25px;
+    padding: 20px 0;
+    box-sizing: border-box;
+}
+
+/* The product name */
+
+.product-list-basic h2{
+    display: block;
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    max-width: 200px;
+    margin:0;
+}
+
+.product-list-basic h2 a{
+    text-decoration: none;
+    color: #2b2b2b;
+}
+
+.product-list-basic .product-compare{
+    float:right;
+
+    color: #808080;
+    text-decoration: none;
+
+    margin-top: -16px;
+}
+
+/* Rating */
+
+.product-list-basic .product-rating div{
+    display: inline-block;
+    width: 80px;
+    margin-top: 10px;
+}
+
+.product-list-basic .product-rating .product-stars{
+    display: inline-block;
+
+    color: #f09911;
+    font-size: 14px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.product-list-basic .product-rating .product-stars i{
+    margin-right: 2px;
+}
+
+.product-list-basic .product-rating span{
+    margin-bottom: -2px;
+}
+
+.product-list-basic .product-rating span a{
+    color: #808080;
+    text-decoration: none;
+}
+
+/* Product description */
+
+.product-list-basic .product-description{
+    margin-top: 20px;
+
+    color: #5d5d5d;
+    font-size: 14px;
+    line-height: 1.45;
+    white-space: normal;
+
+    max-width: 260px;
+    margin-bottom: 20px;
+}
+
+/* Price and order button */
+
+.product-list-basic button{
+    border-radius: 2px;
+    background-color:  #87bae1;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
+    border: 0;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 13px;
+    cursor: pointer;
+
+    width: 95px;
+    height: 32px;
+}
+
+.product-list-basic .product-out-of-stock{
+    color: #c15017;;
+    font-weight: bold;
+    line-height: 32px;
+
+    width: 95px;
+    height: 32px;
+}
+
+.product-list-basic .product-price{
+    float: right;
+
+    color:  #4e4e4e;
+    font-weight: bold;
+    font-size: 20px;
+
+    padding-top: 6px;
+    margin: 0;
+}
+
+/* Making the list responsive */
+
+@media (max-width: 800px){
+
+    .product-list-basic .product-photo{
+        width: 225px;
+    }
+
+    .product-list-basic .product-description{
+        max-width: 225px;
+    }
+}
+/*End of product list styling*/
+
+/*Item styling*/
+
+.item-pic {
+  width: 150px;
+}
+
+.item-wrapper {
+  overflow: hidden;
+  border: 3px dashed #eeeeee;
+}
+
+.item-title {
+
+}
+
+.item-desc {
+
+}
+
+.item-title {
+
+}
+
+.profile-userbuttons {
+  margin-bottom: 5px;
+}
+/*End of item styling*/
+
+
+/*Notification box styling*/
+
+.notification {
+    display: block;
+    position: fixed;
+    top: 100px;
+    right: 10px;
+    width: 400px;
+    z-index: 10;
+    background-color: lightgreen;
+    padding: 10px;
+    border: 1px dashed green;
+    border-radius: 10px !important;
+    opacity: 0;
 }

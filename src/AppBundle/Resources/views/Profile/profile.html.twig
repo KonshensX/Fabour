@@ -183,6 +183,7 @@
                                                         'attr': {'class': 'btn btn-circle green-haze'}
                                                     }) }}
                                                 </div>
+                                                {{ form_rest(avatar) }}
                                                 {{ form_end(avatar) }}
                                             </div>
                                         </div>
@@ -221,7 +222,7 @@
                                                <!--  <p class="item-desc">{{ item.description|length > 50 ? item.description|slice(0, 150) ~ '...' : item.description  }}</p> -->
                                                 <p class="item-desc">{{ item.category.getCat }}</p>
                                                 <p class="item-desc"><strong>{{ item.city.getCity }}</strong></p>
-                                                <div class="profile-userbuttons pull-right">
+                                                <div class="profile-userbuttons pull-right fucks">
                                                     <a href="{{ path('app_post_delete', {'id': item.id }) }}" class="btn btn-circle red-haze "><span class="glyphicon glyphicon-trash"></span></a>
                                                     <a href="{{ path('app_post_edit', {'id': item.id }) }}" class="btn btn-circle green-haze "><span class="glyphicon glyphicon-pencil"></span></a>
                                                     <a href="{{ path('app_post_full', {'id': item.id }) }}" class="btn btn-circle blue-chambray">View</a>

@@ -155,8 +155,11 @@
                 type: "POST",
                 url: "{{ path('add_view', {'id': item.id}) }}"
             });
+
             var url = "/pagination/web/app_dev.php/post/checkFav/{{ item.id }}";
             favedOrNah(url);
+
+
         });
 
         $('#fav').on('click', function(e){

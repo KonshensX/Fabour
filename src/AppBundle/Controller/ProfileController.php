@@ -80,55 +80,65 @@ class ProfileController extends Controller
 
         $avatar->handleRequest($request);
 
-        if($request->getMethod() === "POST") {
+        if($request->isXmlHttpRequest()) {
+            if($request->getMethod() === "POST") {
 
-            if($request->request->has('userinfo-form')){
-                if($form->isValid() && $form->isSubmitted()) {
-                    //this is supposed to update the personal informations on the profile page
-                    $repo->setFirstname($form['fname']->getData());
-                    $repo->setLastname($form['lname']->getData());
-                    $repo->setMobile($form['phone']->getData());
-                    $repo->setInterests($form['interests']->getData());
-                    $repo->setOccupation($form['occupation']->getData());
-                    $repo->setAbout($form['about']->getData());
+                die();
+                if($request->request->has('avatar-form')) {
 
-                    $em->flush();
+                    if($avatar->isValid() && $avatar->isSubmitted()) {
+                        /**
+                         * @var Symfony\Component\HttpFoundation\File\UploadedFile $file
+                         */
+                        $file = $avatar['avatar']->getData();
+                        $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                        $file->move(
+                            $this->getParameter('profile_directory'),
+                            $fileName
+                        );
+                        $repo->setImage($fileName);
 
-                    $response = new JsonResponse();
-                    $response->setData(array(
-                        'title'   =>  "Profile informations were updated successfully!",
-                        'message'   =>  "Profile informations were updated successfully and now is a good time to go get some food"
-                    ));
-                    $response->headers->set('Content-type', 'application/json');
-                    return $response;
+
+
+                        //$em->flush();
+
+                        $response = new JsonResponse();
+                        $response->setData(array(
+                            'title' => "Image successfully updated",
+                            'message'   =>  "The image was successfully updated"
+                        ));
+                        $response->headers->set('Content-Type', 'application/json');
+                        return $response;
+                    }
                 }
-            }
-            if($request->request->has('avatar-form')) {
-                if($avatar->isValid() && $avatar->isSubmitted()) {
-                    /**
-                     * @var Symfony\Component\HttpFoundation\File\UploadedFile $file
-                     */
+                /*
+                if($request->request->has('userinfo-form')){
 
-                    $file = $avatar['avatar']->getData();
-                    $fileName = md5(uniqid()).'.'.$file->guessExtension();
-                    $file->move(
-                        $this->getParameter('profile_directory'),
-                        $fileName
-                    );
-                    $repo->setImage($fileName);
-                    $em->flush();
+                    if($form->isValid() && $form->isSubmitted()) {
+                        //this is supposed to update the personal informations on the profile page
+                        $repo->setFirstname($form['fname']->getData());
+                        $repo->setLastname($form['lname']->getData());
+                        $repo->setMobile($form['phone']->getData());
+                        $repo->setInterests($form['interests']->getData());
+                        $repo->setOccupation($form['occupation']->getData());
+                        $repo->setAbout($form['about']->getData());
 
-                    $response = new JsonResponse();
-                    $response->setData(array(
-                        'title' => "Image successfully updated",
-                        'message'   =>  "The image was successfully updated"
-                    ));
-                    $response->headers->set('Content-Type', 'application/json');
-                    return $response;
+                        $em->flush();
+
+                        $response = new JsonResponse();
+                        $response->setData(array(
+                            'title'   =>  "Profile informations were updated successfully!",
+                            'message'   =>  "Profile informations were updated successfully and now is a good time to go get some food"
+                        ));
+                        $response->headers->set('Content-type', 'application/json');
+                        return $response;
+                    }
                 }
+                */
             }
         }
 
+        var_dump($request->request);
         return $this->render('AppBundle:Profile:profile.html.twig', array(
             'info'  =>  $repo,
             'form'  =>  $form->createView(),
