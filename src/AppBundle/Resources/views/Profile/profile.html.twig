@@ -191,20 +191,26 @@
 
                                     <!-- Pane #2 Messages -->
                                     <div class="tab-pane" id="tab2">
-                                        {% for message in messages %}
-                                            <a href="{{ path('full_message', {'id': message.id}) }}">
-                                                <div class="row">
-                                                    <div class="message-wrapper">
-                                                        <div class="col-lg-12"><span class="glyphicon glyphicon-user"></span> <strong>{{ message.sender }}</strong></div>
-                                                        <br>
-                                                        <div class="col-lg-12"><span class="glyphicon glyphicon-share-alt"></span> {{ message.content|length>70 ? message.content|slice(0,70) : message.content }} ...</div>
-                                                        <br>
-                                                             <div class="col-lg-12"><span class="glyphicon glyphicon-dashboard"></span> {{ message.time|date('Y-m-d H:m:s') }}</div>
+                                        {% if(messages) %}
+                                            {% for message in messages %}
+                                                <a href="{{ path('full_message', {'id': message.id}) }}">
+                                                    <div class="row">
+                                                        <div class="message-wrapper">
+                                                            <div class="col-lg-12"><span class="glyphicon glyphicon-user"></span> <strong>{{ message.sender }}</strong></div>
+                                                            <br>
+                                                            <div class="col-lg-12"><span class="glyphicon glyphicon-share-alt"></span> {{ message.content|length>70 ? message.content|slice(0,70) : message.content }} ...</div>
+                                                            <br>
+                                                            <div class="col-lg-12"><span class="glyphicon glyphicon-dashboard"></span> {{ message.time|date('Y-m-d H:m:s') }}</div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </a>
-                                            <hr>
-                                        {% endfor %}
+                                                </a>
+                                                <hr>
+                                            {% endfor %}
+
+                                        {% else %}
+                                            <h3 class="text-primary text-center">You have no messages</h3>
+                                        {% endif %}
+
 
                                     </div>
                                     <!-- Pane #3 existing items -->

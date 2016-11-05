@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\PersonalInfo;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -32,31 +33,40 @@ class ProfileController extends Controller
         /**
          * Update the user informations
          */
+        if(!$repo) {
+            $repo = new PersonalInfo();
+        }
         $form = $this->container->get('form.factory')->createNamedBuilder('userinfo-form', FormType::class)
                 ->add('fname', TextType::class, array(
                     'label' => 'First name',
-                    'data' => $repo->getFirstname()
+                    'data' => $repo->getFirstname(),
+                    'required' => false
                 ))
 
                 ->add('lname', TextType::class, array(
                     'label' => 'Last name',
-                    'data' => $repo->getLastname()
+                    'data' => $repo->getLastname(),
+                    'required' => false
                 ))
                 ->add('phone', TextType::class, array(
                     'label' => 'Phone number',
-                    'data' => $repo->getMobile()
+                    'data' => $repo->getMobile(),
+                    'required' => false
                 ))
                 ->add('interests', TextType::class, array(
                     'label' => 'Interests',
-                    'data' => $repo->getInterests()
+                    'data' => $repo->getInterests(),
+                    'required' => false
                 ))
                 ->add('occupation', TextType::class, array(
                     'label' => 'Occupation',
-                    'data' => $repo->getOccupation()
+                    'data' => $repo->getOccupation(),
+                    'required' => false
                 ))
                 ->add('about', TextType::class, array(
                     'label' => 'About',
-                    'data' => $repo->getAbout()
+                    'data' => $repo->getAbout(),
+                    'required' => false
                 ))
                 ->add('submit', SubmitType::class, array(
                     'label' => 'Save Changes'
@@ -82,8 +92,6 @@ class ProfileController extends Controller
 
         if($request->isXmlHttpRequest()) {
             if($request->getMethod() === "POST") {
-
-                die();
                 if($request->request->has('avatar-form')) {
 
                     if($avatar->isValid() && $avatar->isSubmitted()) {
@@ -97,10 +105,8 @@ class ProfileController extends Controller
                             $fileName
                         );
                         $repo->setImage($fileName);
-
-
-
-                        //$em->flush();
+                        
+                        $em->flush();
 
                         $response = new JsonResponse();
                         $response->setData(array(
@@ -111,11 +117,12 @@ class ProfileController extends Controller
                         return $response;
                     }
                 }
-                /*
+
                 if($request->request->has('userinfo-form')){
 
                     if($form->isValid() && $form->isSubmitted()) {
                         //this is supposed to update the personal informations on the profile page
+                        $repo->setUsername($this->getUser());
                         $repo->setFirstname($form['fname']->getData());
                         $repo->setLastname($form['lname']->getData());
                         $repo->setMobile($form['phone']->getData());
@@ -123,6 +130,7 @@ class ProfileController extends Controller
                         $repo->setOccupation($form['occupation']->getData());
                         $repo->setAbout($form['about']->getData());
 
+                        $em->persist($repo);
                         $em->flush();
 
                         $response = new JsonResponse();
@@ -134,11 +142,10 @@ class ProfileController extends Controller
                         return $response;
                     }
                 }
-                */
+
             }
         }
 
-        var_dump($request->request);
         return $this->render('AppBundle:Profile:profile.html.twig', array(
             'info'  =>  $repo,
             'form'  =>  $form->createView(),
