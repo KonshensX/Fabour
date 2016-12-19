@@ -6,24 +6,32 @@
     {{ parent() }}
 
     <ul class="product-list-basic">
-   {% for item in items %}
-        <li>
+    {% if items %}
+            {% for item in items %}
+                <li>
 
-            <a href="{{ path('app_post_full', { 'id': item.id }) }}" class="product-photo">
-                <img class="img-responsive" src="{{ asset('/uploads/images/posts/' ~ item.image) }}" height="130" alt="{{ item.title }}" />
-            </a>
+                    <a href="{{ path('app_post_full', { 'id': item.id }) }}" class="product-photo">
+                        <img class="img-responsive" src="{{ asset('/uploads/images/posts/' ~ item.image) }}" height="130" alt="{{ item.title }}" />
+                    </a>
 
-            <h2><a href="{{ path('app_post_full', { 'id': item.id }) }}">{{ item.title }}</a></h2>
-            {#<a href="#" class="product-compare">{{ item.owner }}</a>#}
-            <p class="product-description">{{ item.category.getCat() }}</p>
-            <strong><p class="product-description">{{ item.city.getCity() }}</p></strong>
-            <!--
-            <p>{{ item.description|length > 150 ? item.description|slice(0,30) : item.description  }}...</p>
-            -->
-            <p class="product-price">{{ item.price }}DH</p>
+                    <h2><a href="{{ path('app_post_full', { 'id': item.id }) }}">{{ item.title }}</a></h2>
+                    {#<a href="#" class="product-compare">{{ item.owner }}</a>#}
+                    <p class="product-description">{{ item.category.getCat() }}</p>
+                    <strong><p class="product-description">{{ item.city.getCity() }}</p></strong>
+                    <!--
+                    <p>{{ item.description|length > 150 ? item.description|slice(0,30) : item.description  }}...</p>
+                    -->
+                    <p class="product-price">{{ item.price }}DH</p>
 
-        </li>
-       {% endfor %}
+                </li>
+            {% endfor %}
+
+    {% else %}
+        <div class="alert alert-info">
+            <h2 class="text-center text-info">Opps, there are no items at the moment :(</h2>
+        </div>
+    {% endif %}
+   
 
     </ul>
 

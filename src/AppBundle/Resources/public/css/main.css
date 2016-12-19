@@ -456,7 +456,7 @@ ul {
     display: block;
     position: fixed;
     top: 100px;
-    right: 10px;
+    right: -400px;
     width: 400px;
     z-index: 10;
     background-color: lightgreen;
@@ -464,4 +464,17 @@ ul {
     border: 1px dashed green;
     border-radius: 10px !important;
     opacity: 0;
+}
+
+
+
+
+/*Search bar stuff*/
+.search-bar {
+    padding: 10px 0;
+    background: linear-gradient(to top right, #34b3a0 0%, #204056 100%);
+}
+
+.full-width {
+    width: 100% !important;
 }

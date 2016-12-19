@@ -105,11 +105,11 @@ function notif(title, text, bgColor) {
   }, 300, "linear", function(){
     setTimeout(function(){
       $box.animate({
+        right: "-400px",
         display: "none",
-        right: "-200px",
         opacity: "0"
       });
-    }, 5000);
+    }, 3000);
   });
 
 }
@@ -125,7 +125,10 @@ function previewImage() {
 
     if(file) {
       reader.readAsDataURL(file);
-    } else {
-      preview.src= "";
     }
+}
+//Delete the city from database using ajax
+function deleteCity(e, id) {
+  e.preventDefault();
+  //var url =
 }

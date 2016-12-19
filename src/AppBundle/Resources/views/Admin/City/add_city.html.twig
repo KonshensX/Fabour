@@ -1,0 +1,80 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:Admin\CityController:addCity{% endblock %}
+
+{% block body %}
+<div class="col-md-9">
+    <div class="portlet light">
+        <div class="portlet-title">
+            <div class="caption caption-md">
+                <span class="caption-subject font-blue uppercase font-blue-madison">Add new cities and edit them and shit</span>
+            </div>
+            <h1 class="text-center text-info"> </h1>
+        </div>
+        <div class="portlet-body">
+
+            {{ form_start(form, {
+                'attr': {'class': 'form-inline'}
+            })}}
+            {#
+                {{ form_label(form.name, null, {
+                    'attr': {'class': 'label-control'}
+                }) }}
+            #}
+            {{ form_widget(form.name, {
+                'attr': {'class': 'form-control', 'placeholder': 'Please enter the city name'}
+            }) }}
+            {{ form_widget(form.submit, {
+                'attr': {'class': 'btn btn-info'}
+            }) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <div class="portlet light">
+        <div class="portlet-title">
+            <div class="caption caption-md">
+                <span class="caption-subject bold font-blue-madison uppercase">All Cities</span>
+            </div>
+        </div>
+        <div class="portlet-body">
+
+            <table class="table table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <td width="10">ID</td>
+                        <td width="70">Name</td>
+                        <td width="10"><span class="glyphicon glyphicon-pencil"></span></td>
+                        <td width="10"><span class="glyphicon glyphicon-trash"></span></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for city in cities %}
+                        <tr>
+                            <td>{{ city.id }}</td>
+                            <td>{{ city.city }}</td>
+                            <td><a href="#" class="btn btn-sm btn-info">Edit</a></td>
+                            <td><a href="#" class="btn btn-sm btn-danger">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+    <div class="col-md-3">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <span class="red-flamingo uppercase bold caption-subject">Sidebar</span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                Shit content
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -24,7 +24,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a href="{{ path('homepage') }}" >
-                        <img src="{{ asset('bundles/app/img/Beats-logo.png') }}" alt="" class="navbar-brand">
+                        <img src="{{ asset('bundles/app/img/logo.png') }}" alt="" class="navbar-brand">
                     </a>
                 </div><!-- navbar-header -->
 
@@ -87,23 +87,23 @@
                                 'attr': {'class': 'form-inline'}
                             }) }}
                             <div class="col-lg-4">
-                                <div class="form-group">
+                                <div class="form-group full-width">
                                     {{ form_widget(form.item, {
-                                        'attr': {'class':'form-control'}
+                                            'attr': {'class':'form-control full-width'}
                                     }) }}
                                 </div>
                             </div>
                             <div class="col-lg-3">
-                                <div class="form-group">
+                                <div class="form-group full-width">
                                     {{ form_widget(form.category, {
-                                        'attr': {'class':'form-control'}
+                                        'attr': {'class':'form-control full-width'}
                                     }) }}
                                 </div>
                             </div>
                             <div class="col-lg-3">
-                                <div class="form-group">
+                                <div class="form-group full-width">
                                     {{ form_widget(form.city, {
-                                        'attr': {'class':'form-control'}
+                                        'attr': {'class':'form-control full-width'}
                                     }) }}
                                 </div>
                             </div>
