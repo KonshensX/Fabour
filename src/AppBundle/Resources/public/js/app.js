@@ -132,3 +132,32 @@ function deleteCity(e, id) {
   e.preventDefault();
   //var url =
 }
+
+/*
+=========================================================================================================
+Toggle items in the profile section Activate/Deactivate
+=========================================================================================================
+*/
+
+function toggleStatus(e, id) {
+  e.preventDefault();
+  var $button = document.querySelector("#toggleButton"+id);
+  $.get('/fabour/web/app_dev.php/post/toggleStatus/'+id)
+      .done(function(data) {
+        if (data.message === "active") {
+          if ($button.classList.contains("btn-success")) {
+            $button.classList.remove("btn-success");
+            $button.classList.add("btn-danger");
+            $button.innerHTML = "Activate";
+          }
+        } else if (data.message === "not active"){
+          if ($button.classList.contains("btn-danger")) {
+            $button.classList.remove("btn-danger");
+            $button.classList.add("btn-success");
+            $button.innerHTML = "Deactivate";
+          }
+        }
+  });
+  //var status = $button.classList;
+  //console.log(value);
+}

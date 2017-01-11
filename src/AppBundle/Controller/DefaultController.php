@@ -16,6 +16,20 @@ use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
 {
+    /*==========================================*/
+    /* This is the renderer of the navbar along with the profile picture */
+    /*==========================================*/
+    public function profilePictureAction() {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $repo = $em->getRepository('AppBundle:PersonalInfo')->findOneBy(['username' => $this->getUser()->getUsername()]);
+
+        return $this->render('AppBundle::navbar.html.twig', [
+           'profilepic' => $repo->getImage()
+        ]);
+    }
+
     /**
      * @Route("/", name="homepage")
      */

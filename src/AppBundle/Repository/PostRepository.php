@@ -38,4 +38,16 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         return $updateQuery->execute();
 
     }
+
+    /**
+     * Get the top 4 most viewed items
+     */
+    public function getViews($em) {
+        $selectQuery = $em->createQuery("SELECT p.views as views FROM AppBundle:Post p ORDER BY views;")
+                          ->setMaxResults(1);
+
+        return $selectQuery->getScalarResult();
+    }
+
+
 }

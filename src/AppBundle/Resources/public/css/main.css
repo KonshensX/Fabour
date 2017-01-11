@@ -467,8 +467,6 @@ ul {
 }
 
 
-
-
 /*Search bar stuff*/
 .search-bar {
     padding: 10px 0;
@@ -477,4 +475,67 @@ ul {
 
 .full-width {
     width: 100% !important;
+}
+
+/*Swag container*/
+.swag-container {
+    padding: 10px 0;
+    background: linear-gradient(to top right, #34b3a0 0%, #204056 100%);
+    margin-bottom: 10px;
+    border-radius: 5px !important;
+}
+
+.swag-text {
+    font-size: 24pt;
+    color: white;
+    text-transform: uppercase;
+}
+
+/*Additional styles should be down here */
+
+/*Popular items section at the bottom of the page*/
+.popular_items_wrapper {
+    padding: 10px;
+    background-color: #e1e1e1;
+    display: flex;
+    justify-content: center;
+}
+
+.popular_items_wrapper .item-container {
+    width: 250px;
+    display: block;
+    box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.42), 0 3px 20px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.popular_items_wrapper .item-container img {
+    display: block;
+    margin:auto;
+}
+
+.popular_items_wrapper .item-container img {
+    display: block;
+    margin:auto;
+}
+
+/*This is the end of all additional styles */
+/*Footer shall remain the last style of the page*/
+
+
+/*Footer styling will be down here*/
+
+footer {
+    padding: 30px 30px;
+    background-color: #222c37;
+    color: #9e9e9e; 
+}
+
+footer img {
+    display: block;
+    margin: 15px auto;
+    
+}
+
+footer p {
+    text-align: center;
+    
 }

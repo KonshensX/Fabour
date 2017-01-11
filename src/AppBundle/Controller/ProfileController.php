@@ -155,6 +155,20 @@ class ProfileController extends Controller
         ));
     }
 
+
+    /**
+     * This is the controller for the items fetching and rendering
+     */
+    public function itemsFetchingAction() {
+        $em = $this->getDoctrine()->getManager();
+
+        $items = $em->getRepository('AppBundle:Post')->findAll();
+
+        return $this->render('AppBundle:Profile:items.html.twig',[
+            'items' => $items
+        ]);
+    }
+
     /**
      * @Route("/update", name="profile_update")
      */

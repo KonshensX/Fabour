@@ -30,6 +30,7 @@ class Post
      **/
     private $city;
 
+
     /**
      * @var int
      *
@@ -116,6 +117,13 @@ class Post
      * @ORM\Column(name="views", type="integer", nullable=true)
      */
     private $views;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isactive", type="boolean", nullable=true)
+     */
+    private $isActive;
 
 
 
@@ -457,4 +465,30 @@ class Post
     {
         return $this->image;
     }
+
+    /**
+     * Set views
+     *
+     * @param integer $views
+     *
+     * @return Post
+     */
+    public function setViews($views)
+    {
+        $this->views = $views;
+
+        return $this;
+    }
+
+    /**
+     * Get views
+     *
+     * @return integer
+     */
+    public function getViews()
+    {
+        return $this->views;
+    }
+
+
 }

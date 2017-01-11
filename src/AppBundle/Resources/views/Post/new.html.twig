@@ -1,9 +1,11 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}AppBundle:Post:new{% endblock %}
+{% block title %}Add new item{% endblock %}
 
 {% block body %}
-<h1 class="text-success">Add new item</h1>
+<div class="swag-container">
+    <h1 class="swag-text text-center">Add new item</h1>
+</div>
     {% if app.session.flashBag.has('post-add') %}
         {% for message in app.session.flashBag.get('post-add') %}
             <div class="row">
@@ -13,10 +15,13 @@
             </div>
         {% endfor %}
     {% endif %}
-    <div style="color: #000;">
-    {{ form_start(form, {
-        'attr': {'id': 'addForm'}
-    }) }}
+
+    <div class="col-lg-9">
+        <div class="portlet light">
+            <div class="portlet-body" style="overflow: hidden">
+            {{ form_start(form, {
+                'attr': {'id': 'addForm'}
+            }) }}
         <div class="form-group">
             {{ form_widget(form.title, {
                 'attr': {'class': 'form-control input-lg', 'placeholder': 'Please enter the title here'}
@@ -35,29 +40,38 @@
             }) }}
         </div>
 
-        <div class="form-group">
-            {{ form_widget(form.category, {
-                'attr': {'class': 'form-control'}
-            }) }}
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    {{ form_widget(form.category, {
+                        'attr': {'class': 'form-control'}
+                    }) }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    {{ form_widget(form.city, {
+                        'attr': {'class': 'form-control'}
+                    }) }}
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            {{ form_widget(form.city, {
-                'attr': {'class': 'form-control'}
-            }) }}
-        </div>
-
-
-        <div class="form-group">
-            {{ form_widget(form.phone, {
-                'attr': {'class': 'form-control input-lg', 'placeholder': 'Please enter your phone number here'}
-            }) }}
-        </div>
-
-        <div class="form-group">
-            {{ form_widget(form.email, {
-                'attr': {'class': 'form-control input-lg', 'placeholder': 'Please enter your email here'}
-            }) }}
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group">
+                    {{ form_widget(form.phone, {
+                        'attr': {'class': 'form-control input-lg', 'placeholder': 'Please enter your phone number here'}
+                    }) }}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    {{ form_widget(form.email, {
+                         'attr': {'class': 'form-control input-lg', 'placeholder': 'Please enter your email here'}
+                    }) }}
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
@@ -73,7 +87,17 @@
         </div>
 
     {{ form_end(form) }}
+            </div>
+        </div>
     </div>
+
+
+
+<div class="col-lg-3">
+    <div class="portlet light">
+
+    </div>
+</div>
 
 
 {% endblock %}

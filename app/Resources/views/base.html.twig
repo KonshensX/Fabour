@@ -13,71 +13,10 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        <!-- navbar -->
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header text-center">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" >
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a href="{{ path('homepage') }}" >
-                        <img src="{{ asset('bundles/app/img/logo.png') }}" alt="" class="navbar-brand">
-                    </a>
-                </div><!-- navbar-header -->
-
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    <div class="navbar-collapse collapse" id="navbar">
-                        <!-- Work to be done , so messy -->
-                        <div class="nav navbar-nav pull-right">
-                            <ul class="notification-bar">
-                                <li>
-                                    <a href="#" class="holo">
-                                        <i class="icon glyphicon glyphicon-bell"></i>
-                                        <span class="badge">150</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="holo" id="favList">
-                                        <i class="icon glyphicon glyphicon-star"></i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="holo">
-                                        <i class="icon glyphicon glyphicon-transfer"></i>
-                                        <span class="badge">7</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('app_profile_profile') }}" class="holo">
-                                        <img class="img-circle box-size" src="{{ asset('bundles/app/img/avatar1.jpg') }}" alt="Logo"><span class="username">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
-                                        <a class="holo" href="{{ path('fos_user_security_logout') }}">
-                                           <span class="glyphicon glyphicon-log-out"></span> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                                        </a>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="pull-right">
-                        <ul class="notification-bar">
-                            <li>
-                                <a class="holo" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
-                            </li>
-                            <li>
-                                <a class="holo" href="{{ path('fos_user_registration_register') }}">Register</a>
-                            </li>
-                        </ul>
-
-                    </div>
-
-                {% endif %}
-
-            </div>
-        </nav>
+        {# ======================================================#}
+        {# 0 - Navbar was here                                   #}
+        {# ======================================================#}
+        {{ render(controller('AppBundle:Default:profilePicture')) }}
         <main>
             {% if app.request.get('_route') == 'homepage' %}
                 <div class="search-bar">
@@ -89,7 +28,7 @@
                             <div class="col-lg-4">
                                 <div class="form-group full-width">
                                     {{ form_widget(form.item, {
-                                            'attr': {'class':'form-control full-width'}
+                                            'attr': {'class':'form-control full-width', 'placeholder': 'Search for items'}
                                     }) }}
                                 </div>
                             </div>
@@ -126,10 +65,19 @@
             <div class="container" style="margin-top: 50px">
             {% block body %}{% endblock %}
             </div>
+            {# ======================================================#}
+            {# 1 - Popular items bar                                 #}
+            {# ======================================================#}
+            {{ render(controller('AppBundle:Post:popularItemsBottom')) }}
+
         </main>
         <footer>
             <div class="container">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium adipisci aliquam asperiores assumenda aut, dolorum eius eligendi enim eos error magnam nam nostrum quam ratione reiciendis sunt unde voluptate voluptatibus.</p>
+                <div class="bottom-logo-holder">
+                    <img src="{{ asset('bundles/app/img/logo-bottom.png') }}" alt="">
+                </div>
+                <p>Copyright © 2016 Fabour</p>
+                <p class="text-center">This website was made by Mohammed Baza @ 2016</p>
             </div>
         </footer>
         <!-- Loading the scripts -->

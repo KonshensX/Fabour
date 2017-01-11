@@ -3,8 +3,9 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
 {% block fos_user_content %}
-    <div class="col-lg-offset-3 col-lg-6">
-        <div class="portlet light">
+    <div class="aligner">
+        <div class="col-lg-offset-3 col-lg-6 centeredForReal">
+        <div class="portlet light" style="overflow: hidden">
             <div class="portlet-title">
                 <div class="caption caption-md">
                     Login
@@ -26,14 +27,17 @@
                         <input class="form-control" type="password" id="password" name="_password" required="required" />
                     </div>
                     <div class="checkbox">
-                        <label>
-                            <input class="control-label" type="checkbox" id="remember_me" name="_remember_me" value="on" /> {{ 'security.login.remember_me'|trans }}
-                        </label>
+                        <div class="col-lg-12">
+                            <label>
+                                <input class="control-label" type="checkbox" id="remember_me" name="_remember_me" value="on" /> {{ 'security.login.remember_me'|trans }}
+                            </label>
+                        </div>
                     </div>
                     <input class="btn btn-circle red-haze pull-right" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
                 </form>
             </div>
 
         </div>
+    </div>
     </div>
 {% endblock fos_user_content %}

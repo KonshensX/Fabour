@@ -1,0 +1,65 @@
+<!-- navbar -->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header text-center">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" >
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="{{ path('homepage') }}" >
+                <img src="{{ asset('bundles/app/img/logo.png') }}" alt="" class="navbar-brand">
+            </a>
+        </div><!-- navbar-header -->
+
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <div class="navbar-collapse collapse" id="navbar">
+                <!-- Work to be done , so messy -->
+                <div class="nav navbar-nav pull-right">
+                    <ul class="notification-bar">
+                        <li>
+                            <a href="#" class="holo">
+                                <i class="icon glyphicon glyphicon-bell"></i>
+                                <span class="badge">150</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="holo" id="favList">
+                                <i class="icon glyphicon glyphicon-star"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="holo">
+                                <i class="icon glyphicon glyphicon-transfer"></i>
+                                <span class="badge">7</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_profile_profile') }}" class="holo">
+                                <img class="img-circle box-size" src="{{ asset('uploads/images/profile/') ~ profilepic }}" alt="Logo"><span class="username">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
+                                <a class="holo" href="{{ path('fos_user_security_logout') }}">
+                                    <span class="glyphicon glyphicon-log-out"></span> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                                </a>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        {% else %}
+            <div class="pull-right">
+                <ul class="notification-bar">
+                    <li>
+                        <a class="holo" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                    </li>
+                    <li>
+                        <a class="holo" href="{{ path('fos_user_registration_register') }}">Register</a>
+                    </li>
+                </ul>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+</nav>

@@ -118,6 +118,13 @@ class Post
      */
     private $views;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="isactive", type="boolean", nullable=true)
+     */
+    private $isActive;
+
 
 
     /**
@@ -481,5 +488,31 @@ class Post
     public function getViews()
     {
         return $this->views;
+    }
+
+
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     *
+     * @return Post
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 }

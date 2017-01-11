@@ -1,13 +1,13 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}Admin - Managing the Cities{% endblock %}
+{% block title %}Admin - Managing the Categories{% endblock %}
 
 {% block body %}
 <div class="col-md-9">
     <div class="portlet light">
         <div class="portlet-title">
             <div class="caption caption-md">
-                <span class="caption-subject font-blue uppercase font-blue-madison">Add new cities and edit them and shit</span>
+                <span class="caption-subject font-blue uppercase font-blue-madison">Add new Categories and edit them and shit</span>
             </div>
             <h1 class="text-center text-info"> </h1>
         </div>
@@ -22,7 +22,7 @@
                 }) }}
             #}
             {{ form_widget(form.name, {
-                'attr': {'class': 'form-control', 'placeholder': 'Please enter the city name'}
+                'attr': {'class': 'form-control', 'placeholder': 'Please enter the category name'}
             }) }}
             {{ form_widget(form.submit, {
                 'attr': {'class': 'btn btn-info'}
@@ -34,7 +34,7 @@
     <div class="portlet light">
         <div class="portlet-title">
             <div class="caption caption-md">
-                <span class="caption-subject bold font-blue-madison uppercase">All Cities</span>
+                <span class="caption-subject bold font-blue-madison uppercase">All Categories</span>
             </div>
         </div>
         <div class="portlet-body">
@@ -49,12 +49,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for city in cities %}
+                    {% for Categories in categories %}
                         <tr>
-                            <td>{{ city.id }}</td>
-                            <td>{{ city.city }}</td>
+                            <td>{{ Categories.id }}</td>
+                            <td>{{ Categories.cat }}</td>
                             <td><a href="#" class="btn btn-sm btn-info">Edit</a></td>
-                            <td><a href="{{ path('deleteCity', {'id': city.id}) }}" class="btn btn-sm btn-danger">Delete</a></td>
+                            <td><a href="{{ path('deleteCategory', {'id': Categories.id }) }}" class="btn btn-sm btn-danger">Delete</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -77,9 +77,4 @@
         </div>
     </div>
 
-{% endblock %}
-{% block javascripts %}
-    <script type="text/javascript">
-        
-    </script>
 {% endblock %}

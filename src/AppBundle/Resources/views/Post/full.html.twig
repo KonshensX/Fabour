@@ -16,7 +16,11 @@
             <div class="portlet-title">
                 <div class="caption caption-md">
                     <h2 class="text-primary">{{ item.title }}</h2>
-                    <a id="fav" class="btn btn-circle blue-chambray-stripe" href="" >Favorite</a>
+                    {% if isFaved %}
+                    <a id="fav" class="btn btn-circle blue-chambray-stripe" href=""><span class="glyphicon glyphicon-star-empty"></span>Favorite</a>
+                    {% else %}
+                    <a id="fav" class="btn btn-circle blue-chambray-stripe" href=""><span class="glyphicon glyphicon-star"></span>Favored</a>
+                    {% endif %}
                 </div>
                 <div class="actions"><h2 class="text-primary">{{ item.price }}DH</h2></div>
             </div>
@@ -156,7 +160,7 @@
                 url: "{{ path('add_view', {'id': item.id}) }}"
             });
 
-            var url = "/pagination/web/app_dev.php/post/checkFav/{{ item.id }}";
+            var url = "/fabour/web/app_dev.php/post/checkFav/{{ item.id }}";
             favedOrNah(url);
 
 
@@ -165,7 +169,7 @@
         $('#fav').on('click', function(e){
             e.preventDefault();
             var button = document.querySelector('#fav');
-            var url = "/pagination/web/app_dev.php/post/favorated/{{ item.id }}";
+            var url = "/fabour/web/app_dev.php/post/favorated/{{ item.id }}";
             otherSide(url);
         });
     </script>

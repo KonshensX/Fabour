@@ -6,6 +6,7 @@ use AppBundle\Entity\FavoritePost;
 use AppBundle\Entity\Images;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Category;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Class PostController
@@ -44,6 +46,8 @@ class PostController extends Controller
 
     /**
      * @Route("/new")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
@@ -212,6 +216,9 @@ class PostController extends Controller
 
     /**
      * @Route("/full/{id}")
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function fullAction(Request $request, $id)
     {
@@ -219,6 +226,8 @@ class PostController extends Controller
 
         $repo = $em->getRepository('AppBundle:Post')->findOneBy(array('id'  =>  $id));
         $images = $em->getRepository('AppBundle:Images')->findBy(array('post_id' =>  $id));
+        $isFavorated = $em->getRepository('AppBundle:FavoritePost')->findOneBy(['postId' => $id,
+                                                                                'userId' => $this->getUser()->getId()]);
 
         $messageForm = $this->createFormBuilder(null)
             ->add('name', TextType::class, array(
@@ -261,6 +270,7 @@ class PostController extends Controller
 
         return $this->render('AppBundle:Post:full.html.twig', array(
             'item'  =>  $repo,
+            'isFaved' => $isFavorated,
             'images'    =>  $images,
             'message'   =>  $messageForm->createView()
         ));
@@ -334,7 +344,7 @@ class PostController extends Controller
         ]);
 
         if(!$exists) {
-            //if it doesn't exists add it
+            //if it doesn't exist add it
             $response->setData([
                'title' => "favorite"
             ]);
@@ -344,6 +354,75 @@ class PostController extends Controller
             ]);
         }
         return $response;
+    }
+
+    /**
+     * @Route("/toggleStatus/{id}", name="toggleStatus")
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     */
+     public function toggleStatusAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+        $response = new JsonResponse();
+        $data = $em->getRepository('AppBundle:Post')->findOneBy(array('id' => $id));
+         if ($data) {
+             if ($data->getIsActive()) {
+                 $data->setIsActive(false);
+                 $em->persist($data);
+                 $em->flush();
+                 $response->setData(['message' => 'not active']);
+             }  else {
+                 $response->setData(['message' => 'active']);
+                 $data->setIsActive(true);
+                 $em->persist($data);
+                 $em->flush();
+             }
+         } else {
+             throw new Exception("Oops, it appears that this item does not exist!");
+         }
+        return $response;
+     }
+
+    /**
+     * @Route("/checkStatus/{id}", name="check_item_status")
+     * @param $id
+     * @return JsonResponse
+     * @throws \Exception
+     * @internal param Request $request
+     */
+    public function checkStatusAction($id) {
+        $response = new JsonResponse();
+        $em =$this->getDoctrine()->getManager();
+
+        $status = $em->getRepository('AppBundle:Post')->findOneBy(['id' => $id]);
+        if (!$status) {
+            throw new Exception("This item does not exist, please enter another one!");
+            return;
+        }
+        $response->setData(['status' => $status->getIsActive()]);
+
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
+     * Popular items for the bottom of the page
+     * @Route("/testing", name="testingRecommendedItems")
+     */
+    public function popularItemsBottomAction() {
+        $em = $this->getDoctrine()->getManager();
+        /**
+         * Views does not refer to drake album lel :'(
+         */
+//        $views = $em->getRepository('AppBundle:Post')->getViews($em);
+//        $items = $em->getRepository('AppBundle:Post')->findBy([
+//            'isActive' => true,
+//            'views' => 5
+//        ]);
+
+        return $this->render('AppBundle:Post:popular.html.twig', [
+        ]);
     }
 
 }

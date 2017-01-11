@@ -54,10 +54,15 @@ class CityController extends Controller
 
         $city = $em->getRepository('AppBundle:City')->findOneBy(['id' => $id]);
 
+        $em->remove($city);
+        $em->flush();
+
         $response = new JsonResponse();
         $response->headers->set('Content-Type', 'application/json');
         $response->setData(['title' => 'Deleted', 'message' => 'It was deleted hooorah!!!!']);
-        return $response;
-    }
+        return $this->redirect($this->generateUrl('app_admin_city_addcity'));
+
+        }
+
 
 }

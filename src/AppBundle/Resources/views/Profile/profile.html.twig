@@ -13,7 +13,9 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <h2 class="text-info">User profile</h2>
+            <div class="swag-container">
+                <h2 class="swag-text text-center">Welcome {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</h2>
+            </div>
         </div>
     </div>
     {#
@@ -214,30 +216,8 @@
 
                                     </div>
                                     <!-- Pane #3 existing items -->
-                                    <div class="tab-pane" id="tab3">
-                                        <div class="row">
-                                            <a class="btn btn-circle green-haze pull-right" href="{{ path('app_post_new') }}">New item</a>
-                                        </div>
-                                        <hr>
-                                        {% for item in items %}
-                                        <div class="item-wrapper">
-                                            <img class="img-responsive item-pic" src="{{ asset('uploads/images/posts/' ~ item.image) }}" alt="">
+                                    {{ render(controller('AppBundle:Profile:itemsFetching')) }}
 
-                                            <div class="col-lg-9 item-info">
-                                                <a href="{{ path('app_post_full', {'id': item.id }) }}"><span class="item-title">{{ item.title }}</span></a>
-                                               <!--  <p class="item-desc">{{ item.description|length > 50 ? item.description|slice(0, 150) ~ '...' : item.description  }}</p> -->
-                                                <p class="item-desc">{{ item.category.getCat }}</p>
-                                                <p class="item-desc"><strong>{{ item.city.getCity }}</strong></p>
-                                                <div class="profile-userbuttons pull-right fucks">
-                                                    <a href="{{ path('app_post_delete', {'id': item.id }) }}" class="btn btn-circle red-haze "><span class="glyphicon glyphicon-trash"></span></a>
-                                                    <a href="{{ path('app_post_edit', {'id': item.id }) }}" class="btn btn-circle green-haze "><span class="glyphicon glyphicon-pencil"></span></a>
-                                                    <a href="{{ path('app_post_full', {'id': item.id }) }}" class="btn btn-circle blue-chambray">View</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                            <hr>
-                                        {% endfor %}
-                                    </div>
                                 </div>
                             </div>
                         </div>
