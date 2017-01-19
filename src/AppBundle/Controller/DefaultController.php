@@ -32,6 +32,8 @@ class DefaultController extends Controller
 
     /**
      * @Route("/", name="homepage")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function indexAction(Request $request)
     {
@@ -39,57 +41,13 @@ class DefaultController extends Controller
 
         $repo = $em->getRepository('AppBundle:Post')->findAll();
 
-        $form = $this->createFormBuilder(null)
-            ->add('item', TextType::class)
-            ->add('category', EntityType::class, array(
-                // query choices from this entity
-                'class' => 'AppBundle:Category',
-
-                // use the User.username property as the visible option string
-                'choice_label' => 'cat',
-
-                // used to render a select box, check boxes or radios
-                // 'multiple' => true,
-                // 'expanded' => true,
-            ))
-
-            ->add('city', EntityType::class, array(
-                // query choices from this entity
-                'class' => 'AppBundle:City',
-
-                // use the User.username property as the visible option string
-                'choice_label' => 'city',
-
-            ))
-            ->add('submit', SubmitType::class, array(
-                'label' =>  'Search'
-            ))
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if($form->isValid() && $form->isSubmitted()){
-            $data = array(
-                'term' => $form['item']->getData(),
-                'category' => $form['category']->getData(),
-                'city' => $form['city']->getData()
-            );
-
-            return $this->redirectToRoute('app_post_search', array(
-                'term' => $data['term'],
-                'category' => $data['category']->getCat(),
-                'city' => $data['city']->getCity()
-            ));
-
-        }
+        
 
         /*Form handling submission*/
 
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig' , array(
             'items' => $repo,
-
-            'form' => $form->createView()
         ));
     }
 
