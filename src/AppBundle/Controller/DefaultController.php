@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Message;
 use AppBundle\Entity\Images;
+use AppBundle\Entity\PersonalInfo;
 use AppBundle\Entity\Post;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -13,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\RequestHandlerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -21,12 +23,26 @@ class DefaultController extends Controller
     /*==========================================*/
     public function profilePictureAction() {
 
+        /*if (!$this->getuser()) {
+            return new Response("This is a guest user!");
+        }*/
         $em = $this->getDoctrine()->getManager();
+        if ($this->getUser())
+        {
+            $repo = $em->getRepository('AppBundle:PersonalInfo')->findOneBy(['username' => $this->getUser()->getUsername()]);
+        } else {
+            $repo = new PersonalInfo();
+        }
 
-        $repo = $em->getRepository('AppBundle:PersonalInfo')->findOneBy(['username' => $this->getUser()->getUsername()]);
+        if ($repo->getImage()) {
+            $profilePicture =  $repo->getImage();
+        } else {
+            $profilePicture = 'profilePicture.png';
+        }
+
 
         return $this->render('AppBundle::navbar.html.twig', [
-           'profilepic' => $repo->getImage()
+           'profilepic' => $profilePicture
         ]);
     }
 

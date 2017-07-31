@@ -6,6 +6,7 @@ a:hover {
 body {
     background-color: #eff3f8;
     color: #000;
+    font-family: Roboto!important;
 }
 
 main {
@@ -277,12 +278,11 @@ ul {
     display: inline-block;
 
     text-align:left;
-    font:normal 12px sans-serif;
 
     background-color:#ffffff;
     border:1px solid #dbe3e7;
-    border-radius: 3px;
-    box-shadow: 1px 3px 1px rgba(0, 0, 0, 0.08);
+    border-radius: 10px!important;
+    box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.08);
 
     margin: 0 12px 14px 0;
     padding: 25px;
@@ -374,7 +374,7 @@ ul {
 /* Price and order button */
 
 .product-list-basic button{
-    border-radius: 2px;
+    border-radius: 25px !important;
     background-color:  #87bae1;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.12);
     border: 0;
@@ -516,6 +516,23 @@ ul {
     display: block;
     margin:auto;
 }
+
+
+/*** Styling the cards ***/
+
+.card_full {
+    width: 300px;
+    height: 350px;
+    overflow: hidden;
+
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+
+    border: 1px solid black;
+}
+
+/** End of cards styling ***/
 
 /*This is the end of all additional styles */
 /*Footer shall remain the last style of the page*/

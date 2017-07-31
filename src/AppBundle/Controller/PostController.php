@@ -128,9 +128,9 @@ class PostController extends Controller
         ));
     }
 
-                /**
-                 * @Route("/edit/{id}")
-                 */
+    /**
+     * @Route("/edit/{id}")
+     */
     public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getEntityManager();
@@ -223,11 +223,13 @@ class PostController extends Controller
     public function fullAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $isFavorated = null;
         $repo = $em->getRepository('AppBundle:Post')->findOneBy(array('id'  =>  $id));
         $images = $em->getRepository('AppBundle:Images')->findBy(array('post_id' =>  $id));
-        $isFavorated = $em->getRepository('AppBundle:FavoritePost')->findOneBy(['postId' => $id,
-                                                                                'userId' => $this->getUser()->getId()]);
+        if ($this->getUser()) {
+            $isFavorated = $em->getRepository('AppBundle:FavoritePost')->findOneBy(['postId' => $id,
+                'userId' => $this->getUser()->getId()]);
+        }
 
         $messageForm = $this->createFormBuilder(null)
             ->add('name', TextType::class, array(

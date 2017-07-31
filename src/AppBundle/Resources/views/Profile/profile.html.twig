@@ -48,7 +48,11 @@
         <div class="col-lg-3 col-md-6">
             <div class="portlet light profile-sidebar-portlet">
                 <div class="profile-userpic">
+                    {% if info.image %}
                     <img class="img-responsive img-rounded" id="profile-userpic" src="{{ asset('uploads/images/profile/' ~ info.image) }}" alt="{{ info.username }}" width="200" height="200">
+                     {% else %}
+                         <img class="img-responsive img-rounded" id="profile-userpic" src="{{ asset('bundles/app/img/profilePicture.png') }}" alt="{{ info.username }}" width="200" height="200">
+                    {% endif %}
                 </div>
                 <div class="profile-usertitle">
                     <div class="profile-usertitle-name">{{ info.username }}</div>
@@ -89,7 +93,7 @@
                                         <a href="#tab2" data-toggle="tab" aria-expanded="false"><span class="glyphicon glyphicon-envelope"></span> Messages</a>
                                     </li>
                                     <li class>
-                                        <a href="#tab3" data-toggle="tab" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span> My shit</a>
+                                        <a href="#tab3" data-toggle="tab" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span> My Posts</a>
                                     </li>
                                 </ul>
                             </div>
@@ -162,7 +166,11 @@
                                     <!-- Pane #4 Avatar -->
                                     <div class="tab-pane" id="tab4">
                                         <div class="col-lg-offset-3 col-lg-6">
-                                            <img class="img-responsive img-rounded preview" src="{{ asset('uploads/images/profile/' ~ info.image) }}" alt="{{ info.username }}">
+                                            {% if info.image %}
+                                                <img class="img-responsive img-rounded preview" src="{{ asset('uploads/images/profile/' ~ info.image) }}" alt="{{ info.username }}">
+                                            {% else %}
+                                                <img class="img-responsive img-rounded preview" src="{{ asset('bundles/app/img/profilePicture.png') }}" alt="{{ info.username }}">
+                                            {% endif %}
                                         </div>
                                         </hr>
                                         </hr>

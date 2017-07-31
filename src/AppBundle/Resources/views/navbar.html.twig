@@ -37,7 +37,13 @@
                         </li>
                         <li>
                             <a href="{{ path('app_profile_profile') }}" class="holo">
-                                <img class="img-circle box-size" src="{{ asset('uploads/images/profile/') ~ profilepic }}" alt="Logo"><span class="username">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
+                                {% if (profilepic != "profilePicture.png") %}
+                                    <img class="img-circle box-size" src="{{ asset('uploads/images/profile/') ~ profilepic }}" alt="Logo"><span class="username">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
+                                {% else %}
+                                    <img class="img-circle box-size" src="{{ asset('bundles/app/img/') ~ profilepic }}" alt="Logo"><span class="username">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
+                                {% endif %}
+
+
                                 <a class="holo" href="{{ path('fos_user_security_logout') }}">
                                     <span class="glyphicon glyphicon-log-out"></span> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
                                 </a>
@@ -50,10 +56,10 @@
             <div class="pull-right">
                 <ul class="notification-bar">
                     <li>
-                        <a class="holo" href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        <a class="holo" href="{{ path('fos_user_security_login') }}"><span class="glyphicon glyphicon-log-in"></span> {{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
                     </li>
                     <li>
-                        <a class="holo" href="{{ path('fos_user_registration_register') }}">Register</a>
+                        <a class="holo" href="{{ path('fos_user_registration_register') }}"><span class="glyphicon glyphicon-log-in"></span> Register</a>
                     </li>
                 </ul>
 
