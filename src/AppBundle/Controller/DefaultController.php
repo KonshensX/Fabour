@@ -55,9 +55,7 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $repo = $em->getRepository('AppBundle:Post')->findAll();
-
-        
+        $repo = $em->getRepository('AppBundle:Post')->findActivePosts();
 
         /*Form handling submission*/
 

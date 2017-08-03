@@ -16,7 +16,9 @@ class SearchController extends Controller
     public function searchBarRenderAction(Request $request) {
         $form = $this->createFormBuilder(null)
             ->setAction($this->generateUrl('searchHandler'))
-            ->add('item', TextType::class)
+            ->add('item', TextType::class, [
+                'required' => false
+            ])
             ->add('category', EntityType::class, array(
                 // query choices from this entity
                 'class' => 'AppBundle:Category',
@@ -53,14 +55,9 @@ class SearchController extends Controller
         // dump($request->request);
         $em = $this->getDoctrine()->getEntityManager();
         $data = $request->request->get('form');
-        dump($data['item']);
-
         // Get the data from the model
-        $posts = $em->getRepository('AppBundle:Post')->findBy([
-            'title' => $data['item'],
-            'category_id' => $data['category'],
-            'city_id' => $data['city']
-        ]);
+        $posts = $em->getRepository('AppBundle:Post')
+                    ->searchForItems($em, $data['item'], $data['category'], $data['city']);
 
         // Send the data to the view
         return $this->render('AppBundle:Post:search.html.twig', [

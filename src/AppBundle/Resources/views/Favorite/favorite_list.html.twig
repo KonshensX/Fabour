@@ -1,9 +1,8 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}AppBundle:Favorite:favoriteList{% endblock %}
+{% block title %}Favorites{% endblock %}
 
 {% block body %}
-<h1>Welcome to the Favorite:favoriteList page</h1>
     <div class="portlet light">
         <div class="portlet-title">
             <div class="caption caption-md">
@@ -11,6 +10,9 @@
             </div>
         </div>
         <div class="portlet-body">
+            <div class="items-wrapper">
+
+            </div>
             {% for post in posts %}
                 <div class="item-wrapper">
                     <img class="img-responsive item-pic" src="{{ asset('uploads/images/posts/' ~ post.image) }}" alt="">

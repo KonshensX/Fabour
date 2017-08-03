@@ -52,7 +52,7 @@
                 <hr>
             <div class="row">
                 <div class="col-lg-6">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#messageModal">
+                    <a href="#" class="btn btn-circle btn-primary" data-toggle="modal" data-target="#messageModal">
                         <span class="glyphicon glyphicon-envelope"></span> Contact Seller
                     </a>
                 </div>
@@ -101,9 +101,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Send a message</h4>
                 </div>
-                {{ form_start(message, {
-                    'attr': {'id': 'message'}
-                }) }}
+                {{ form_start(message) }}
                 <div class="modal-body">
                     <div class="form-group">
                         {{ form_label(message.name, null, {
@@ -139,9 +137,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-circle btn-default" data-dismiss="modal">Cancel</button>
                     {{ form_widget(message.send, {
-                        'attr': {'class': 'btn btn-primary'}
+                        'attr': {'class': 'btn btn-circle btn-primary'}
                     }) }}
                 </div>
                 {{ form_end(message) }}

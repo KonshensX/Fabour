@@ -52,8 +52,6 @@
   function prepareUpload(e){
     files = e.target.files;
   }
-
-
 })(jQuery);
 
 function favedOrNah(url) {
@@ -144,13 +142,13 @@ function toggleStatus(e, id) {
   var $button = document.querySelector("#toggleButton"+id);
   $.get('/fabour/web/app_dev.php/post/toggleStatus/'+id)
       .done(function(data) {
-        if (data.message === "active") {
+        if (data.message === "deactivated") {
           if ($button.classList.contains("btn-success")) {
             $button.classList.remove("btn-success");
             $button.classList.add("btn-danger");
             $button.innerHTML = "Activate";
           }
-        } else if (data.message === "not active"){
+        } else if (data.message === "activated"){
           if ($button.classList.contains("btn-danger")) {
             $button.classList.remove("btn-danger");
             $button.classList.add("btn-success");
@@ -160,4 +158,23 @@ function toggleStatus(e, id) {
   });
   //var status = $button.classList;
   //console.log(value);
+
+  // Submit the form
+  var contactForm = $("#contactForm");
+
+  contactForm.on('submit', function (e) {
+    console.log('hello hhh');
+    alert('contactForm was triggered');
+    e.preventDefault();
+    // Prepare the data that will be sent to the server
+    // var data = new FormData(contactForm);
+    // Send the  message via AJAX
+    $.post(contactForm.attr('action'), {data: 'hello world'})
+        .done(function (data) {
+          console.log('done');
+        })
+        .catch(function (err) {
+          alert('error')
+        });
+  })
 }

@@ -6,6 +6,7 @@ use AppBundle\Entity\FavoritePost;
 use AppBundle\Entity\Images;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Category;
+use AppBundle\Form\MessageType;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -20,6 +21,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class PostController
@@ -231,24 +233,11 @@ class PostController extends Controller
                 'userId' => $this->getUser()->getId()]);
         }
 
-        $messageForm = $this->createFormBuilder(null)
-            ->add('name', TextType::class, array(
-                'label' => 'Your name'
-            ))
-            ->add('phone', TextType::class, array(
-                'label' =>  'Your phone number'
-            ))
-            ->add('email', TextType::class, array(
-                'label' =>  'Your email'
-            ))
-            ->add('message', TextareaType::class, array(
-                'label' =>  'Message'
-            ))
-            ->add('send', SubmitType::class, array(
-                'label' =>  'Send'
-            ))
-        ->getForm();
-
+        $messageForm = $this->createForm(MessageType::class, null, [
+            'action' => $this->generateUrl('sendMessage', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            'method' => 'POST',
+        ]);
+        /*
         $messageForm->handleRequest($request);
 
         if($messageForm->isValid() && $messageForm->isSubmitted()) {
@@ -260,7 +249,7 @@ class PostController extends Controller
             $messageContent = "Name: " . $name . "<br>" .
                                 "Phone: " . $phone . "<br>" .
                                 $messageContent;
-
+            // Send an email to the receiver
             $message = \Swift_Message::newInstance()
                 ->setSubject($name . "Sent you a message concerning " .$repo->getTitle())
                 ->setFrom($email)
@@ -269,6 +258,7 @@ class PostController extends Controller
 
             $this->get('mailer')->send($message);
         }
+        */
 
         return $this->render('AppBundle:Post:full.html.twig', array(
             'item'  =>  $repo,
@@ -359,6 +349,8 @@ class PostController extends Controller
     }
 
     /**
+     * Favorite or UnFavorite a post
+     *
      * @Route("/toggleStatus/{id}", name="toggleStatus")
      * @param Request $request
      * @param $id
@@ -373,9 +365,9 @@ class PostController extends Controller
                  $data->setIsActive(false);
                  $em->persist($data);
                  $em->flush();
-                 $response->setData(['message' => 'not active']);
+                 $response->setData(['message' => 'deactivated']);
              }  else {
-                 $response->setData(['message' => 'active']);
+                 $response->setData(['message' => 'activated']);
                  $data->setIsActive(true);
                  $em->persist($data);
                  $em->flush();

@@ -36,13 +36,29 @@
                             </a>
                         </li>
                         <li>
+                            <p>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" data-toggle="dropdown">Options
+                                    <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li>
+
+                                        <a href="{{ path('favoritesList') }}">
+                                            <span class="glyphicon glyphicon-star"></span>
+                                             Favorites
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            </p>
+                        </li>
+                        <li>
                             <a href="{{ path('app_profile_profile') }}" class="holo">
                                 {% if (profilepic != "profilePicture.png") %}
                                     <img class="img-circle box-size" src="{{ asset('uploads/images/profile/') ~ profilepic }}" alt="Logo"><span class="username">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
                                 {% else %}
                                     <img class="img-circle box-size" src="{{ asset('bundles/app/img/') ~ profilepic }}" alt="Logo"><span class="username">{{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
                                 {% endif %}
-
 
                                 <a class="holo" href="{{ path('fos_user_security_logout') }}">
                                     <span class="glyphicon glyphicon-log-out"></span> {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
@@ -62,7 +78,6 @@
                         <a class="holo" href="{{ path('fos_user_registration_register') }}"><span class="glyphicon glyphicon-log-in"></span> Register</a>
                     </li>
                 </ul>
-
             </div>
 
         {% endif %}

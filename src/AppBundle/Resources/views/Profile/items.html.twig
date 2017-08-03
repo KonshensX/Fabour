@@ -19,9 +19,9 @@
                 <a href="{{ path('app_post_edit', {'id': item.id }) }}" class="btn btn-circle green-haze "><span class="glyphicon glyphicon-pencil"></span></a>
                 <a href="{{ path('app_post_full', {'id': item.id }) }}" class="btn btn-circle blue-chambray">View</a>
                 {% if (item.getIsActive) %}
-                    <a href="#" id="toggleButton{{ item.id }}" class="btn btn-md btn-success" onclick="toggleStatus(event, {{ item.id }})">Deactivate</a>
+                    <a href="#" id="toggleButton{{ item.id }}" class="btn btn-md btn-circle btn-success" onclick="toggleStatus(event, {{ item.id }})">Deactivate</a>
                 {% else %}
-                    <a href="#" id="toggleButton{{ item.id }}" class="btn btn-md btn-danger" onclick="toggleStatus(event, {{ item.id }})">Activate</a>
+                    <a href="#" id="toggleButton{{ item.id }}" class="btn btn-md btn-circle btn-danger" onclick="toggleStatus(event, {{ item.id }})">Activate</a>
                 {% endif %}
             </div>
         </div>

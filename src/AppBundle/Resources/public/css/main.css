@@ -427,9 +427,16 @@ ul {
   width: 150px;
 }
 
+.items-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
 .item-wrapper {
-  overflow: hidden;
-  border: 3px dashed #eeeeee;
+    overflow: hidden;
+    border-radius: 5px!important;
+    border-color: lightgrey;
+    box-shadow: 0px 2px 56px -15px rgba(0,0,0,0.48);
 }
 
 .item-title {
