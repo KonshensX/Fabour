@@ -160,21 +160,7 @@ function toggleStatus(e, id) {
   //console.log(value);
 
   // Submit the form
-  var contactForm = $("#contactForm");
+  // var contactForm = $("#contactForm");
 
-  contactForm.on('submit', function (e) {
-    console.log('hello hhh');
-    alert('contactForm was triggered');
-    e.preventDefault();
-    // Prepare the data that will be sent to the server
-    // var data = new FormData(contactForm);
-    // Send the  message via AJAX
-    $.post(contactForm.attr('action'), {data: 'hello world'})
-        .done(function (data) {
-          console.log('done');
-        })
-        .catch(function (err) {
-          alert('error')
-        });
-  })
+    
 }

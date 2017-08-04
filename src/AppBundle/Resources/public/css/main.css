@@ -12,6 +12,11 @@ body {
 main {
   margin-top: 60px;
 }
+
+.modal-content {
+    border-radius: 10px !important;
+}
+
 /*Form styling*/
 
 form{

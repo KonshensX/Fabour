@@ -31,13 +31,13 @@ class Message
     /**
      * @var string
      *
-     * @ORM\Column(name="sender", type="id", length=255)
+     * @ORM\Column(name="sender", type="integer", length=255)
      */
     private $sender;
 
     /**
      * @var string
-     * @ORM\Column(name="receiver", type="id", length=255)
+     * @ORM\Column(name="receiver", type="integer", length=255)
      */
     private $receiver;
 

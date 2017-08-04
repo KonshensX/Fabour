@@ -21,6 +21,9 @@ class MessageType extends AbstractType {
             ->add('phone', TextType::class, array(
                 'label' => 'Your phone number'
             ))
+            ->add('title', TextType::class, array(
+                'label' => 'Subject'
+            ))
             ->add('email', EmailType::class, array(
                 'label' => 'Your email'
             ))

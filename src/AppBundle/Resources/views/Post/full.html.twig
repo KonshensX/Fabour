@@ -91,6 +91,22 @@
                 </div>
             </div>
         </div>
+        <div class="col-lg-3">
+            <div class="portlet light">
+                <div class="portlet-title">
+                    <div class="caption caption-md">
+                        The owner
+                    </div>
+                    <div class="portlet-body">
+                        <p>{{ item.owner }}</p>
+                    </div>
+                </div>
+
+                <div class="portlet-body">
+                    <span class="text-center">{{ item.views }}</span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Modal -->
@@ -98,8 +114,10 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Send a message</h4>
+                    <div class="modal-title" id="myModalLabel">
+                        <h4><strong>Send a message</strong></h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
                 </div>
                 {{ form_start(message) }}
                 <div class="modal-body">
@@ -124,12 +142,28 @@
                             'label_attr': {'class': 'label-control'}
                         }) }}
                         {{ form_widget(message.email, {
-                            'attr': {'class': 'form-control'}
+                            'attr': {
+                                'class': 'form-control',
+                                'value': app.user.email
+                            }
+                        }) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(message.title, null, {
+                            'label_attr': {'class': 'label-control'}
+                        }) }}
+                        {{ form_widget(message.title, {
+                            'attr': {
+                                'class': 'form-control',
+                                'value': item.title
+                            }
                         }) }}
                     </div>
                     <div class="form-group">
                         {{ form_label(message.message, null, {
-                            'label_attr': {'class': 'label-control'}
+                            'label_attr': {
+                                'class': 'label-control'
+                            }
                         }) }}
                         {{ form_widget(message.message, {
                             'attr': {'class': 'form-control'}
@@ -170,5 +204,19 @@
             var url = "/fabour/web/app_dev.php/post/favorated/{{ item.id }}";
             otherSide(url);
         });
+
+
+        // Send the contact form
+        $("#contactForm").on('submit', function (e) {
+            e.preventDefault();
+            // Send the  message via AJAX
+            $.post($(this).attr('action'), $(this).serialize())
+                    .done(function (data) {
+                        console.log('done');
+                    })
+                    .catch(function (err) {
+                        alert('error')
+                    });
+        })
     </script>
 {% endblock %}

@@ -238,7 +238,7 @@ class PostController extends Controller
             'method' => 'POST',
         ]);
         /*
-        $messageForm->handleRequest($request);
+        $messageForm->handleRequest($request);  
 
         if($messageForm->isValid() && $messageForm->isSubmitted()) {
             $name = $messageForm['name']->getData();
