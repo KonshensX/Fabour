@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -78,6 +79,13 @@ class PersonalInfo
      * @Assert\File(mimeTypes={"image/png", "image/jpeg"})
      */
     private $image;
+
+
+    /**
+     * @var
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", mappedBy="personalInfo")
+     */
+    private $user;
 
 
     /**
@@ -280,5 +288,29 @@ class PersonalInfo
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set user
+     *
+     * @param User $user
+     *
+     * @return PersonalInfo
+     */
+    public function setUser(User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

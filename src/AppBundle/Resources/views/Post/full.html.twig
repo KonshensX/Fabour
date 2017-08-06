@@ -94,16 +94,14 @@
         <div class="col-lg-3">
             <div class="portlet light">
                 <div class="portlet-title">
-                    <div class="caption caption-md">
-                        The owner
+                    <div class="caption caption-md text-center">
+                        The seller
                     </div>
                     <div class="portlet-body">
-                        <p>{{ item.owner }}</p>
+                        <img class="img-responsive img-circle"
+                             src="{{ asset('uploads/images/profile/' ~ app.user.personalInfo.image) }}" alt="">
+                        <h3 class="text-primary text-center"><strong>{{ app.user.username }}</strong></h3>
                     </div>
-                </div>
-
-                <div class="portlet-body">
-                    <span class="text-center">{{ item.views }}</span>
                 </div>
             </div>
         </div>
@@ -126,15 +124,22 @@
                             'label_attr': {'class': 'label-control'}
                         }) }}
                         {{ form_widget(message.name, {
-                            'attr': {'class': 'form-control'}
+                            'attr': {
+                                'class': 'form-control',
+                                'value': app.user.personalInfo.firstname ~ ' ' ~ app.user.personalInfo.lastname
+                            }
                         }) }}
                     </div>
                     <div class="form-group">
                         {{ form_label(message.phone, null, {
-                            'label_attr': {'class': 'label-control'}
+                            'label_attr': {
+                                'class': 'label-control'}
                         }) }}
                         {{ form_widget(message.phone, {
-                            'attr': {'class': 'form-control'}
+                            'attr': {
+                                'class': 'form-control',
+                                'value': app.user.personalInfo.mobile ? app.user.personalInfo.mobile : 'Please enter your phone number'
+                            }
                         }) }}
                     </div>
                     <div class="form-group">
@@ -144,7 +149,7 @@
                         {{ form_widget(message.email, {
                             'attr': {
                                 'class': 'form-control',
-                                'value': app.user.email
+                                'value': app.user ? app.user.email : "Please enter your email"
                             }
                         }) }}
                     </div>

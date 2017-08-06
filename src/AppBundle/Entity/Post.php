@@ -2,6 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Category;
+use AppBundle\Entity\City;
+use AppBundle\Entity\Images;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -78,9 +81,9 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(name="owner", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="posts")
      */
-    private $owner;
+    private $user;
 
     /**
      * @var int
@@ -106,6 +109,7 @@ class Post
     /**
      * @ORM\Column(type="string", options={"defaults": "-text.png"})
      *
+     * I Have no idea when i wrote this, this should be changed
      * @Assert\NotBlank(message="Please, upload the product brochure as a PDF file.")
      * @Assert\File(mimeTypes={ "image/jpeg", "image/png" })
      */
@@ -210,30 +214,6 @@ class Post
     }
 
     /**
-     * Set owner
-     *
-     * @param string $owner
-     *
-     * @return Post
-     */
-    public function setOwner($owner)
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
-    /**
-     * Get owner
-     *
-     * @return string
-     */
-    public function getOwner()
-    {
-        return $this->owner;
-    }
-
-    /**
      * Set price
      *
      * @param integer $price
@@ -332,11 +312,11 @@ class Post
     /**
      * Set category
      *
-     * @param \AppBundle\Entity\Category $category
+     * @param Category $category
      *
      * @return Post
      */
-    public function setCategory(\AppBundle\Entity\Category $category = null)
+    public function setCategory(Category $category = null)
     {
         $this->category = $category;
 
@@ -346,7 +326,7 @@ class Post
     /**
      * Get category
      *
-     * @return \AppBundle\Entity\Category
+     * @return Category
      */
     public function getCategory()
     {
@@ -380,11 +360,11 @@ class Post
     /**
      * Set city
      *
-     * @param \AppBundle\Entity\City $city
+     * @param City $city
      *
      * @return Post
      */
-    public function setCity(\AppBundle\Entity\City $city = null)
+    public function setCity(City $city = null)
     {
         $this->city = $city;
 
@@ -394,7 +374,7 @@ class Post
     /**
      * Get city
      *
-     * @return \AppBundle\Entity\City
+     * @return City
      */
     public function getCity()
     {
@@ -411,11 +391,11 @@ class Post
     /**
      * Add post
      *
-     * @param \AppBundle\Entity\Images $post
+     * @param Images $post
      *
      * @return Post
      */
-    public function addPost(\AppBundle\Entity\Images $post)
+    public function addPost(Images $post)
     {
         $this->post[] = $post;
 
@@ -425,9 +405,9 @@ class Post
     /**
      * Remove post
      *
-     * @param \AppBundle\Entity\Images $post
+     * @param Images $post
      */
-    public function removePost(\AppBundle\Entity\Images $post)
+    public function removePost(Images $post)
     {
         $this->post->removeElement($post);
     }
@@ -514,5 +494,29 @@ class Post
     public function getIsActive()
     {
         return $this->isActive;
+    }
+
+    /**
+     * Set user
+     *
+     * @param string $user
+     *
+     * @return Post
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

@@ -5,7 +5,7 @@
         </div>
     </div>
     <hr>
-    {% for item in items %}
+    {% for item in app.user.posts %}
     <div class="item-wrapper">
         <img class="img-responsive item-pic" src="{{ asset('uploads/images/posts/' ~ item.image) }}" alt="">
 

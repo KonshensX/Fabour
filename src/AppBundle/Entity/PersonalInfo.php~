@@ -81,6 +81,13 @@ class PersonalInfo
 
 
     /**
+     * @var
+     * @ORM\OneToOne(targetEntity="AppBundle\Entity\User", mappedBy="personalInfo")
+     */
+    private $user;
+
+
+    /**
      * Get id
      *
      * @return int

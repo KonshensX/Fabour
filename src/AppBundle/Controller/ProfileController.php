@@ -23,49 +23,55 @@ class ProfileController extends Controller
 
         $user = $this->getUser();
 
-        $user = $user->getUsername();
+        // This is getting the information for the current user
+        // This could be deleted, not really useful
+        // I can change this to app.user.personalInfo in the twig
+        // $repo = $em->getRepository('AppBundle:PersonalInfo')->FindOneBy(array('username'    =>  $user->getUsername()));
 
-        $repo = $em->getRepository('AppBundle:PersonalInfo')->FindOneBy(array('username'    =>  $user));
+        // Get the posts of the user
+        // This could be accessed using the app.user.posts
+        // $items = $em->getRepository('AppBundle:Post')->findBy(array('owner'  =>  $user->getUsername()));
 
-        $items = $em->getRepository('AppBundle:Post')->findBy(array('owner'  =>  $user));
+        // Get the messages of the user
+        $messages = $em->getRepository('AppBundle:Message')->findBy(array('receiver'  =>  $user->getUsername()));
 
-        $messages = $em->getRepository('AppBundle:Message')->findBy(array('receiver'  =>  $user));
         /**
          * Update the user informations
          */
-        if(!$repo) {
+        // I have no idea what this check is used for
+        if(!$user->getPersonalInfo()) {
             $repo = new PersonalInfo();
         }
         $form = $this->container->get('form.factory')->createNamedBuilder('userinfo-form', FormType::class)
                 ->add('fname', TextType::class, array(
                     'label' => 'First name',
-                    'data' => $repo->getFirstname(),
+                    'data' => $user->getPersonalInfo()->getFirstname(),
                     'required' => false
                 ))
 
                 ->add('lname', TextType::class, array(
                     'label' => 'Last name',
-                    'data' => $repo->getLastname(),
+                    'data' => $user->getPersonalInfo()->getLastname(),
                     'required' => false
                 ))
                 ->add('phone', TextType::class, array(
                     'label' => 'Phone number',
-                    'data' => $repo->getMobile(),
+                    'data' => $user->getPersonalInfo()->getMobile(),
                     'required' => false
                 ))
                 ->add('interests', TextType::class, array(
                     'label' => 'Interests',
-                    'data' => $repo->getInterests(),
+                    'data' => $user->getPersonalInfo()->getInterests(),
                     'required' => false
                 ))
                 ->add('occupation', TextType::class, array(
                     'label' => 'Occupation',
-                    'data' => $repo->getOccupation(),
+                    'data' => $user->getPersonalInfo()->getOccupation(),
                     'required' => false
                 ))
                 ->add('about', TextType::class, array(
                     'label' => 'About',
-                    'data' => $repo->getAbout(),
+                    'data' => $user->getPersonalInfo()->getAbout(),
                     'required' => false
                 ))
                 ->add('submit', SubmitType::class, array(
@@ -147,10 +153,10 @@ class ProfileController extends Controller
         }
 
         return $this->render('AppBundle:Profile:profile.html.twig', array(
-            'info'  =>  $repo,
+            // 'info'  =>  $repo,
             'form'  =>  $form->createView(),
             'avatar' => $avatar->createView(),
-            'items'  =>  $items,
+            // 'items'  =>  $items,
             'messages' => $messages
         ));
     }
