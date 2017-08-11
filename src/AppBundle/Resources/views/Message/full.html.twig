@@ -1,17 +1,36 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}{#{{ message.title }} #}{% endblock %}
+{% block title %}{{ message.title }}{% endblock %}
 
 {% block body %}
     {{ parent() }}
-    <h1 class="text-success">Full message page</h1>
-    {#
-    {{ message.title }} <br>
-    {{ message.sender }} <br>
-    {{ message.receiver }} <br>
-    {{ message.content }} <br>
-    {{ message.time|date('Y-m-d H:m:s') }} <br>
-    #}
+    <div class="col-md-9">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption">
+                    <span class="caption-subject font-grey-gallery bold font-">{{ message.title }}</span><br>
+                    <span class="caption-subject font-grey-salsa font-sm">from: {{ sender.username }},</span>
+                    <span class="caption-subject font-grey-salsa font-sm">{{ message.time | date('d D-M-Y, H:m') }}</span>
+                    <span class="glyphicon glyphicon-time"></span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                {{ message.content }}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption-subject font-green-haze bold">
+                    <h3 class="text-center">{{ sender.username }}</h3>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <img class="img-responsive img-circle" src="{{ asset('uploads/images/profile/') ~ sender.personalInfo.image }}" />
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

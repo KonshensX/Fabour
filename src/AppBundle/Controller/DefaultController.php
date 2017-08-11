@@ -66,69 +66,6 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/message", name="message")
-     */
-    public function messageAction(Request $request) {
-        $em = $this->getDoctrine()->getManager();
-
-        $form = $this->createFormBuilder(array())
-                ->add('title', TextType::class, array(
-                    'label' =>  'Subject'
-                ))
-                ->add('receiver', TextType::class, array(
-                    'label' =>  'Receiver'
-                ))
-                ->add('content', TextType::class,array(
-                    'label' =>  'Message content'
-                ))
-            ->add('submit', SubmitType::class, array(
-                'label' => 'Send message'
-            ))
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if($form->isValid() && $form->isSubmitted()) {
-
-            $message = new Message();
-            $user = $this->getUser()->getUsername();
-
-            $message->setTitle($form['title']->getData());
-            $message->setSender($user);
-            $message->setReceiver($form['receiver']->getData());
-            $message->setTime(new \DateTime());
-            $message->setContent($form['content']->getData());
-
-            $em->persist($message);
-            $em->flush();
-
-            $this->addFlash('message-success', 'Message was successfully sent');
-
-            $url = $this->generateUrl('message');
-            return $this->redirect($url);
-
-        }
-
-        return $this->render('AppBundle:Message:new.html.twig', array(
-            'form'  =>  $form->createView()
-        ));
-
-    }
-
-    /**
-     * @Route("/full/{id}", name="full_message")
-     */
-    public function fullMessageAction(Request $request, $id) {
-        $em = $this->getDoctrine()->getManager();
-
-        $message = $em->getRepository('AppBundle:Message')->findOneBy(array('id'    =>  $id));
-
-        return $this->render('AppBundle:Message:full.html.twig', array(
-            'message' => $message
-        ));
-    }
-
-    /**
      * @Route("/upload/{id}", name="upload_test")
      */
     public function uploadAction(Request $request, $id) {

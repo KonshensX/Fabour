@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,6 +19,7 @@ class MessageType extends AbstractType {
             ->add('name', TextType::class, array(
                 'label' => 'Your name'
             ))
+            ->add('receiver', HiddenType::class)
             ->add('phone', TextType::class, array(
                 'label' => 'Your phone number'
             ))

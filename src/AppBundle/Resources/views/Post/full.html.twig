@@ -126,7 +126,12 @@
                         {{ form_widget(message.name, {
                             'attr': {
                                 'class': 'form-control',
-                                'value': app.user.personalInfo.firstname ~ ' ' ~ app.user.personalInfo.lastname
+                                'value': app.user.username
+                            }
+                        }) }}
+                        {{ form_widget(message.receiver, {
+                            'attr': {
+                                'value': item.user.username
                             }
                         }) }}
                     </div>
